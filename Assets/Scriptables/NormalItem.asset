@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b15b89fefb350645aaf8be00a5bd677, type: 3}
+  m_Name: NormalItem
+  m_EditorClassIdentifier: 
+  ItemPoolSize: 250
+  ColoredItemDatas:
+  - colorType: 0
+    Sprite: {fileID: 21300000, guid: c25b2964672b8344489f4d48e302c6f6, type: 3}
+  - colorType: 5
+    Sprite: {fileID: 21300000, guid: 2b6fc78ee6a9be44aae72240728da6fd, type: 3}
+  - colorType: 1
+    Sprite: {fileID: 21300000, guid: d13dd2bf125d014408d13c185f7a2b21, type: 3}
+  - colorType: 2
+    Sprite: {fileID: 21300000, guid: e7b5fc880ecb3f5468ebbc745d1bc86d, type: 3}
