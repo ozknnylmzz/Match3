@@ -11,10 +11,8 @@ namespace CasualA.Board
         private GridPosition _targetGridPosition;
         private bool _isDragMode;
 
-        public GridPosition SelectedGridPosition => _selectedGridPosition;
-        public GridPosition TargetGridPosition => _targetGridPosition;
 
-        public void Initialize(Match3Game match3Game,IBoard board)
+        public void Initialize(Match3Game match3Game, IBoard board)
         {
             _match3Game = match3Game;
             _board = board;
@@ -26,7 +24,6 @@ namespace CasualA.Board
             EventManager<Vector2>.Subscribe(BoardEvents.OnPointerDown, OnPointerDown);
             EventManager<Vector2>.Subscribe(BoardEvents.OnPointerUp, OnPointerUp);
             EventManager<Vector2>.Subscribe(BoardEvents.OnPointerDrag, OnPointerDrag);
-            EventManager<(GridPosition, GridPosition)>.Subscribe(BoardEvents.OnSwapDetected, SwapAsync);
         }
 
         public void UnsubcribeEvents()
@@ -34,45 +31,61 @@ namespace CasualA.Board
             EventManager<Vector2>.Unsubscribe(BoardEvents.OnPointerDown, OnPointerDown);
             EventManager<Vector2>.Unsubscribe(BoardEvents.OnPointerUp, OnPointerUp);
             EventManager<Vector2>.Unsubscribe(BoardEvents.OnPointerDrag, OnPointerDrag);
-            EventManager<(GridPosition, GridPosition)>.Unsubscribe(BoardEvents.OnSwapDetected, SwapAsync);
-
         }
 
         public void OnPointerDown(Vector2 pointerWorldPos)
         {
-            if (!_match3Game.IsSwapAllowed)
-            {
-                return;
-            }
+            // if (!_match3Game.IsSwapAllowed)
+            // {
+            //     return;
+            // }
 
             _isDragMode = false;
-
+            _match3Game.ClearMatchData();
             if (_match3Game.IsPointerOnBoard(pointerWorldPos, out _selectedGridPosition))
             {
                 _isDragMode = true;
+                // _match3Game.SetMatchData(_selectedGridPosition);
             }
         }
+
+        GridPosition? _lastGridPosition = new GridPosition();
 
         public void OnPointerDrag(Vector2 pointerWorldPos)
         {
             if (!_isDragMode)
                 return;
-Debug.Log("OnPointerDrag pointerWorldPos"+pointerWorldPos);
-            if (!_match3Game.IsPointerOnBoard(pointerWorldPos, out GridPosition targetGridPosition))
-            {
-                _isDragMode = false;
-                return;
-            }
 
-            if (!IsSideGrid(targetGridPosition))
+            if (_match3Game.IsPointerOnBoard(pointerWorldPos, out GridPosition targetGridPosition))
             {
-                return;
-            }
+                if (!_lastGridPosition.HasValue || !_lastGridPosition.Value.Equals(targetGridPosition))
+                {
+                    _match3Game.SetDiagonalData(targetGridPosition);
+                    Debug.Log("_lastGridPosition.Value"+_lastGridPosition.Value);
+                    if (_match3Game.CheckDiagonel(_lastGridPosition.Value))
+                    {
+                        Debug.Log("_lastGridPosition");
+                        _match3Game.ClearDiagonalSlot();
+                    }
 
-            _isDragMode = false;
-            
-            EventManager<(GridPosition, GridPosition)>.Execute(BoardEvents.OnSwapDetected, (_selectedGridPosition, targetGridPosition));
+                    else
+                    {
+                        _lastGridPosition = targetGridPosition;
+                    }
+
+                    
+                    _match3Game.IsSameItem(targetGridPosition);
+                }
+            }
+            else
+            {
+                _lastGridPosition = null; // Opsiyonel: Pointer tahtanın dışına çıkınca son pozisyonu sıfırla
+            }
         }
+
+
+        // EventManager<(GridPosition, GridPosition)>.Execute(BoardEvents.OnSwapDetected, (_selectedGridPosition, targetGridPosition));
+
 
         public void OnPointerUp(Vector2 pointerWorldPos)
         {
@@ -81,32 +94,15 @@ Debug.Log("OnPointerDrag pointerWorldPos"+pointerWorldPos);
                 return;
             }
 
-            if (!_match3Game.IsPointerOnBoard(pointerWorldPos, out _selectedGridPosition))
+            if (_match3Game.IsMatchDetected())
             {
+                Debug.Log("IsMatchDetected");
+                _match3Game.SwapItemsAsync();
                 return;
             }
 
-          
-
+            // _match3Game.ClearMatchData();
             _isDragMode = false;
-
-            EventManager<GridPosition>.Execute(BoardEvents.OnTapDetected, _selectedGridPosition);
-        }
-
-        private bool IsSideGrid(GridPosition gridPosition)
-        {
-            bool isSideGrid = gridPosition.Equals(_selectedGridPosition + GridPosition.Up) ||
-                              gridPosition.Equals(_selectedGridPosition + GridPosition.Down) ||
-                              gridPosition.Equals(_selectedGridPosition + GridPosition.Left) ||
-                              gridPosition.Equals(_selectedGridPosition + GridPosition.Right);
-
-            return isSideGrid;
-        }
-        
-        private void SwapAsync((GridPosition selectedGridPosition, GridPosition targetGridPosition) swapInput)
-        {
-            // _match3Game.DisableSwap();
-            _match3Game.SwapItemsAsync(swapInput.selectedGridPosition, swapInput.targetGridPosition);
         }
     }
 }

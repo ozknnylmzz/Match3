@@ -7,7 +7,6 @@ namespace CasualA.Board
 {
     public class JobsExecutor : IDisposable
     {
-        public static IEnumerable<Job> Jobs => _jobs;
 
         private static List<Job> _jobs;
 
@@ -26,7 +25,7 @@ namespace CasualA.Board
 
             ItemStateManager.SetAllItemsState();
             
-            await UniTask.WhenAll(_jobs.Select(job => job.ExecuteAsync()));
+             await UniTask.WhenAll(_jobs.Select(job => job.ExecuteAsync()));
 
             ClearJobs();
         }

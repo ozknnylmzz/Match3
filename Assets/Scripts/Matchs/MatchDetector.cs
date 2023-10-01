@@ -2,26 +2,45 @@ using System.Collections.Generic;
 
 namespace CasualA.Board
 {
-    public abstract class MatchDetector : IMatchDetector
+    public class MatchDetector
     {
-        public abstract MatchDetectorType MatchDetectorType { get; }
+        public int MinMatchAmount { get; } = 3;
 
-        public abstract MatchSequence GetMatchSequence(IBoard board, GridPosition gridPosition);
+        private MatchData _matchData;
 
-        protected virtual int MinMatchAmount { get; } = 3;
-
-        protected bool IsMatchAvailable(IBoard board, GridPosition newPosition, IGridSlot initialSlot, out IGridSlot currentSlot)
+        public MatchDetector(MatchData matchData)
+        {
+            _matchData = matchData;
+        }
+        protected bool IsMatchAvailable(IBoard board, List<IGridSlot> initialSlot, out IGridSlot currentSlot)
         {
             currentSlot = null;
 
-            if (!board.IsPositionOnItem(newPosition))
+            // currentSlot = board[newPosition];
+
+            // return IsSameSlot(initialSlot, currentSlot);
+            return true;
+        }
+        public MatchSequence GetMatchSequence(IBoard board, params GridPosition[] gridPositions)
+        {
+            List<IGridSlot> matchedGridSlots=new List<IGridSlot>();
+            foreach (var gridPosition in gridPositions)
             {
-                return false;
+                matchedGridSlots.Add(board[gridPosition]);
             }
 
-            currentSlot = board[newPosition];
+            if (matchedGridSlots.Count<3)
+            {
+                return null;
+            }
+        
 
-            return IsSameSlot(initialSlot, currentSlot);
+            if (IsEnoughMatch(matchedGridSlots))
+            {
+                return new MatchSequence(matchedGridSlots);
+            }
+
+            return null;
         }
 
         protected bool IsEnoughMatch(IReadOnlyList<IGridSlot> matchedGridSlots)

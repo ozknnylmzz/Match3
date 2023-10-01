@@ -30,8 +30,6 @@ namespace CasualA.Board
         public override void Kill(bool shouldPlayExplosion = true, bool isSpecialKill = true)
         {
             base.Kill();
-
-            SetPlayScoreParticle(true);
         }
 
         private void SetContentData(ColoredGlowItemData itemContentData)

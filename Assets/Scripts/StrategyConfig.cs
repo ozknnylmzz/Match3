@@ -7,11 +7,11 @@ namespace CasualA.Board
         public BoardClearStrategy BoardClearStrategy { get; private set; }
         public MatchClearStrategy MatchClearStrategy { get; private set; }
 
-        public void Initialize(IBoard board,ItemGenerator itemGenerator)
+        public void Initialize(IBoard board,ItemGenerator itemGenerator,MatchData matchData)
         {
             FallDownFillStrategy = new FallDownFillStrategy(board, itemGenerator);
             BoardClearStrategy = new BoardClearStrategy(FallDownFillStrategy);
-            MatchClearStrategy = new MatchClearStrategy(BoardClearStrategy, itemGenerator);
+            MatchClearStrategy = new MatchClearStrategy(BoardClearStrategy, itemGenerator,matchData);
         }
     }
 }

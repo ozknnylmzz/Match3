@@ -30,7 +30,6 @@ namespace CasualA.Board
 
         public IGridSlot DestinationSlot { get; private set; }
 
-        public bool IsPlayScoreParticle { get; private set; }
         
         public int ItemStateDelay { get; private set; } = 0;
         
@@ -58,10 +57,7 @@ namespace CasualA.Board
             _generator = generator;
         }
 
-        public void SetPlayScoreParticle(bool value)
-        {
-            IsPlayScoreParticle = value;
-        }
+    
 
         public void SetScore(int score)
         {
@@ -84,7 +80,6 @@ namespace CasualA.Board
             SetScale(1);
             ItemState = ItemState.Rest;
             SetExploded(false);
-            SetPlayScoreParticle(false);
             SetScore(DefaultScore);
             SetItemStateDelay(0);
         }

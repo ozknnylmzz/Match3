@@ -13,9 +13,9 @@ namespace CasualA.Board
 
         public override void AddFillJobs(IEnumerable<IGridSlot> allSlots, IEnumerable<GridItem> allItems)
         {
-            IEnumerable<int> fallSlotsColumnIndexes = allSlots.Select(slot => slot.GridPosition.ColumnIndex);
+            // IEnumerable<int> fallSlotsColumnIndexes = allSlots.Select(slot => slot.GridPosition.ColumnIndex);
             List<ItemFallData> allItemsFallData = new();
-
+            IEnumerable<int> fallSlotsColumnIndexes = allSlots.ToList().Select(slot => slot.GridPosition.ColumnIndex);
             ResetDropSlots();
 
             foreach (int columnIndex in fallSlotsColumnIndexes)
@@ -31,7 +31,6 @@ namespace CasualA.Board
                 }
             }
 
-            EventManager<List<ItemFallData>>.Execute(BoardEvents.OnFallDataCalculated, allItemsFallData);
         }
 
         private List<ItemFallData> GetItemsFallDataPerColumn(int columnIndex)

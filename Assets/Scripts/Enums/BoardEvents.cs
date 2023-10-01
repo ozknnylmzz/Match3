@@ -11,43 +11,16 @@ namespace CasualA.Board
         OnAfterJobsCompleted,
         OnSequenceDataCalculated,
         OnSlotsCalculated,
-        OnScoreCalculated,
-        OnBoosterPointCalculated,
-        OnPowerUpDataCalculated,
+        
         OnFallDataCalculated,
-        OnBoosterPointRequest,
-        OnCloudCityExtraMoveRequest,
-        OnCloudCityExtraMoveAccepted,
-        OnPlayerTurnFinished,
-        OnPlayerMoveEnd,
-        OnUseBooster,
+       
         OnBoardInitialized,
         OnBoardDestroyed,
         OnHandShow,
         OnSwapAllowed,
-        ActivateDarkBackGrounds,
-        OnCreatedPowerUps,
-        OnGameFinished,
-        OnPlaceMixerRequest,
-
-        OnUsePerk,
-
+        OnSwapEnd,
         OnSwapDetected,
         OnTapDetected,
-        OnAutoShuffle
     }
 
-    public enum CheatEvents
-    {
-        OnPointerRightClick,
-        OnSetCheatItem,
-        OnCheckAutoMatchForBooster,
-        OnUseCheatBooster
-    }
-
-    public enum SoloEvents
-    {
-        OnPlayerMoveEnd,
-        OnClosedVSAnim
-    }
 }

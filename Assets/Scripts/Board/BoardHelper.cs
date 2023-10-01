@@ -59,9 +59,9 @@ namespace CasualA.Board
             return GetDirectionalSlots(powerUpSlot, board, GridPosition.SideDirections, distance);
         }
 
-        public static HashSet<IGridSlot> GetDiagonalSlots(IGridSlot powerUpSlot, IBoard board, int distance = 1)
+        public static HashSet<IGridSlot> GetDiagonalSlots(IGridSlot diagonel, IBoard board, int distance = 1)
         {
-            return GetDirectionalSlots(powerUpSlot, board, GridPosition.DiagonalDirections, distance);
+            return GetDirectionalSlots(diagonel, board, GridPosition.DiagonalDirections, distance);
         }
 
         public static HashSet<IGridSlot> GetNeighbourSlots(GridPosition powerUpPosition, IBoard board, int distance = 1)
@@ -176,13 +176,13 @@ namespace CasualA.Board
             return cornerSlots;
         }
 
-        private static HashSet<IGridSlot> GetDirectionalSlots(IGridSlot powerUpSlot, IBoard board, GridPosition[] directions, int distance = 1)
+        private static HashSet<IGridSlot> GetDirectionalSlots(IGridSlot diagonelsSlot, IBoard board, GridPosition[] directions, int distance = 1)
         {
             HashSet<IGridSlot> slotsToDestroy = new HashSet<IGridSlot>();
 
             foreach (GridPosition direction in directions)
             {
-                GridPosition newPosition = powerUpSlot.GridPosition + distance * direction;
+                GridPosition newPosition = diagonelsSlot.GridPosition + distance * direction;
 
                 if (board.IsPositionOnBoard(newPosition))
                 {

@@ -22,7 +22,7 @@ namespace CasualA.Board
 
         public override async UniTask ExecuteAsync()
         {
-            await UniTask.WhenAll(_hideItemsOnColumn.Select(item => UniTask.WaitUntil(() => item.ItemState == ItemState.Hide && ItemStateManager.Unfreeze)));
+            await UniTask.WhenAll(_hideItemsOnColumn.Select(item => UniTask.WaitUntil(() => item.ItemState == ItemState.Hide )));
 
             Sequence sequence = DOTween.Sequence();
 

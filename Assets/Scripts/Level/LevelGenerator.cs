@@ -11,11 +11,10 @@ namespace CasualA.Board
         private MatchDataProvider _matchDataProvider;
         private IBoard _board;
 
-        public void Initialize(IBoard board,ItemGenerator itemGenerator,GameConfig gameConfig)
+        public void Initialize(IBoard board,ItemGenerator itemGenerator)
         {
             _board = board;
             _itemGenerator = itemGenerator;
-            _matchDataProvider = gameConfig.MatchDataProvider;
         }
 
 
@@ -92,11 +91,10 @@ namespace CasualA.Board
 
                 _itemGenerator.SetItemOnSlot(item, slot);
 
-                BoardMatchData boardMatchData = _matchDataProvider.GetMatchData(board,  slot.GridPosition);
+                
+                return item;
+                // if (!boardMatchData.MatchExists) return item;
 
-                if (!boardMatchData.MatchExists) return item;
-
-                item.Hide();
             }
         }
     }

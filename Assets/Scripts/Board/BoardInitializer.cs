@@ -18,9 +18,8 @@ namespace CasualA.Board
 
         private LevelLoader _levelLoader;
         private StrategyConfig _strategyConfig;
-        private GameConfig _gameConfig;
-
-
+        private MatchData _matchData;
+ 
         public void Awake()
         {
             ConstructObjects();
@@ -32,11 +31,10 @@ namespace CasualA.Board
         {
             DOTween.Init().SetCapacity(500, 500);
 
-            _strategyConfig.Initialize(this,_board,_itemGenerator);
-            _gameConfig.Initialize(_itemGenerator);
+            _strategyConfig.Initialize(_board,_itemGenerator,_matchData);
             _board.Initialize();
-            _levelGenerator.Initialize(_board,_itemGenerator,_gameConfig);
-            _match3Game.Initialize(this,_strategyConfig,_gameConfig,_board);
+            _levelGenerator.Initialize(_board,_itemGenerator);
+            _match3Game.Initialize(_strategyConfig,_matchData,_board);
             _levelLoader.Initialize(_levelGenerator);
             _inputController.Initialize(_match3Game,_board);
          
@@ -50,7 +48,7 @@ namespace CasualA.Board
         private void ConstructObjects()
         {
             _strategyConfig = new StrategyConfig();
-            _gameConfig = new GameConfig();
+            _matchData = new MatchData();
             _levelLoader = new LevelLoader();
         }
 

@@ -26,8 +26,6 @@ namespace CasualA.Board
 
 
 
-        public bool CanMixerBePlaced { get; private set; } = true;
-
         public void SetPosition(GridPosition gridPosition, Vector3 worldPosition)
         {
             GridPosition = gridPosition;
@@ -57,10 +55,7 @@ namespace CasualA.Board
             IsItemDroppedTo = value;
         }
 
-        public void SetCanMixerBePlaced(bool value)
-        {
-            CanMixerBePlaced = value;
-        }
+   
 
        
 

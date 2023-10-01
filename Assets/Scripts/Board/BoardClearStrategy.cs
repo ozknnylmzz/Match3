@@ -13,63 +13,34 @@ namespace CasualA.Board
             _fillStrategy = fillStrategy;
         }
 
-        public void ClearSlots(IBoard board, IEnumerable<IGridSlot> matchSlots, IEnumerable<IGridSlot> elementSlots, HashSet<IGridSlot> allSlots, ICollection<SlotClearDataPerMatch> slotClearDataPerMatchList)
+        public void ClearSlots(IBoard board, IEnumerable<IGridSlot> slotsToDestroy)
         {
-            IEnumerable<IGridSlot> slotsToClear = matchSlots.Union(elementSlots);
-            IEnumerable<IGridSlot> chainSlots = GetChainSlots(board, slotsToClear);
-            IEnumerable<GridItem> itemsToClear = BoardHelper.GetItemsOfSlots(chainSlots);
-
-            slotClearDataPerMatchList.Add(new SlotClearDataPerMatch(matchSlots, itemsToClear));
-
-            allSlots.UnionWith(chainSlots);
-        }
-
-        public void ClearSlotsOnPowerUpSwapWithMatch(IBoard board, IGridSlot powerUpSlot, HashSet<IGridSlot> allSlots, ICollection<SlotClearDataPerMatch> slotClearDataPerMatchList)
-        {
-            HashSet<IGridSlot> slotsToDestroy = new() { powerUpSlot };
-
-            HashSet<IGridSlot> slotsToClear = GetChainSlots(board, slotsToDestroy);
-            IEnumerable<GridItem> itemsToClear = BoardHelper.GetItemsOfSlots(slotsToClear);
-
-            slotClearDataPerMatchList.Add(new SlotClearDataPerMatch(slotsToDestroy, itemsToClear));
-
-            allSlots.UnionWith(slotsToClear);
-        }
-
-        public void ClearSlots(IBoard board, IGridSlot comboSlot, IEnumerable<IGridSlot> slotsToDestroy)
-        {
+            // Debug.Log("slotsToClear"+slotsToClear.Count());
             IEnumerable<IGridSlot> slotsToClear = GetChainSlots(board, slotsToDestroy);
             IEnumerable<GridItem> itemsToClear = BoardHelper.GetItemsOfSlots(slotsToClear);
-
-            SlotClearDataPerMatch slotClearDataPerMatch = new SlotClearDataPerMatch(comboSlot == null ? slotsToDestroy : new HashSet<IGridSlot> { comboSlot }, itemsToClear);
-            EventManager<AllSlotsClearData>.Execute(BoardEvents.OnSlotsCalculated, new AllSlotsClearData(new List<SlotClearDataPerMatch> { slotClearDataPerMatch }));
-
+            
+            Debug.Log("slotsToClear"+slotsToDestroy.Count());
+           
             ClearAllSlots(slotsToClear);
             Refill(slotsToClear, itemsToClear);
         }
-
-        public void ClearSlots(IBoard board, IEnumerable<IGridSlot> slotsToDestroy, IGridSlot comboSlot = null)
-        {
-            IEnumerable<IGridSlot> slotsToClear = GetChainSlots(board, slotsToDestroy);
-            IEnumerable<GridItem> itemsToClear = BoardHelper.GetItemsOfSlots(slotsToClear);
-
-            SlotClearDataPerMatch slotClearDataPerMatch = new SlotClearDataPerMatch(comboSlot == null ? slotsToDestroy : new HashSet<IGridSlot> { comboSlot }, itemsToClear);
-            EventManager<AllSlotsClearData>.Execute(BoardEvents.OnSlotsCalculated, new AllSlotsClearData(new List<SlotClearDataPerMatch> { slotClearDataPerMatch }));
-
-            ClearAllSlots(slotsToClear);
-            Refill(slotsToClear, itemsToClear);
-        }
+        
+    
 
 
         public void Refill(IEnumerable<IGridSlot> allSlots, IEnumerable<GridItem> allItems)
         {
-            _fillStrategy.AddFillJobs(allSlots, allItems);
+            if (allItems.Count()>0)
+            {
+                _fillStrategy.AddFillJobs(allSlots, allItems);
+            }
+          
         }
 
         private HashSet<IGridSlot> GetChainSlots(IBoard board, IEnumerable<IGridSlot> initialSlots)
         {
-            HashSet<IGridSlot> slotsToClear = new(initialSlots);
-            HashSet<IGridSlot> chainedSlots = new(initialSlots);
+            HashSet<IGridSlot> slotsToClear = new HashSet<IGridSlot>(initialSlots);
+            HashSet<IGridSlot> chainedSlots =new HashSet<IGridSlot>(initialSlots);
 
             while (true)
             {
@@ -89,7 +60,15 @@ namespace CasualA.Board
 
                 if (slotsToDestroy.Count == 0)
                 {
+                    var selectionSlots = ItemSelectionManager.ExecuteSelectionRequests(board, chainedSlots);
+                    if (selectionSlots.Count() == 0)
+                    {
+                        break;
+                    }
                     slotsToClear.Clear();
+                    slotsToClear.Clear();
+                    slotsToClear.UnionWith(selectionSlots);
+                    chainedSlots.UnionWith(selectionSlots);
                  
                 }
                 else
