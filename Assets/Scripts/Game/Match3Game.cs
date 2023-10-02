@@ -72,10 +72,27 @@ namespace CasualA.Board
             _matchData.SetMatchDatas(gridSlot);
         }
 
-        public void SetDiagonalData(GridPosition gridPosition)
+        public void SetDiagonalData()
         {
-            IGridSlot gridSlot = _board[gridPosition];
-            _matchData.SetDiagonalMoveData(BoardHelper.GetDiagonalSlots(gridSlot, _board));
+            if (_matchData.MatchedDataList.Count<3)
+            {
+                return;
+            }
+            _matchData.SetDiagonalMoveData(BoardHelper.GetDiagonalSlots(_matchData.GetElementFromEnd(3), _board));
+        }
+
+        public void CheckDiagonalMove()
+        {
+            if (_matchData.MatchedDataList.Count<3)
+            {
+                return;
+            }
+            if (_matchData.CheckDiagonalMove())
+            {
+                Debug.Log("check dıagolanl");
+                _matchData.ClearDiagonal();
+            }
+
         }
         
         

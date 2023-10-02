@@ -88,16 +88,7 @@ namespace CasualA.Board
             return RowIndex == other.RowIndex && ColumnIndex == other.ColumnIndex;
         }
 
-        public bool IsDiagonalMove(GridPosition other)
-        {
-      
-            // Satır ve sütun arasındaki farkın mutlak değerini alır
-            int deltaRow = Math.Abs(other.RowIndex - this.RowIndex);
-            int deltaCol = Math.Abs(other.ColumnIndex - this.ColumnIndex);
-
-            // Diyagonal hareket, hem satırın hem de sütunun aynı miktarda değişmesini gerektirir.
-            return deltaRow == deltaCol && deltaRow == 2 && deltaCol == 1;
-        }
+     
 
         public override bool Equals(object obj)
         {

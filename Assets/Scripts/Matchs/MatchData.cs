@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -21,7 +22,15 @@ namespace CasualA.Board
 
         #endregion
 
-     
+        public IGridSlot GetElementFromEnd(int indexFromEnd)
+        {
+            if(indexFromEnd <= 0 || indexFromEnd > MatchedDataList.Count)
+            {
+                Debug.Log("indexFromEnd"+indexFromEnd);
+            }
+            return MatchedDataList[MatchedDataList.Count - indexFromEnd];
+        }
+    
         public void ClearMatchData()
         {
             MatchedDataList.Clear();
@@ -36,9 +45,14 @@ namespace CasualA.Board
         }
         public bool CheckMatch()
         {
-            if(MatchedDataList.Count <= 2)
+            if(MatchedDataList.Count < 3)
             {
                 return false;
+            }
+
+            if (!CheckMatchData())
+            {
+              return  false;
             }
 
            
@@ -46,9 +60,34 @@ namespace CasualA.Board
             return MatchedDataList.All(gridSlot => (int)gridSlot.Item.ColorType == firstColorType);
         }
 
+        private bool CheckMatchData()
+        {
+            IGridSlot lastElement = GetElementFromEnd(1);
+            IGridSlot thirdFromLastElement = GetElementFromEnd(3);
+           
+            return lastElement.Item.ColorType == thirdFromLastElement.Item.ColorType;
+        }
+
         public void SetDiagonalMoveData(HashSet<IGridSlot>DiagonalMoveData)
         {
+            DiagonalMatchedDataList.Clear();
             DiagonalMatchedDataList = DiagonalMoveData;
+        }
+
+        public bool CheckDiagonalMove()
+        {
+            GridPosition lastElementPosition = MatchedDataList[^1].GridPosition;
+
+            // Check if any grid position in DiagonalMatchedDataList is equal to lastElementPosition.
+            foreach(var diagonalElement in DiagonalMatchedDataList)
+            {
+                if(diagonalElement.GridPosition.Equals(lastElementPosition))
+                {
+                    return true;
+                }
+            }
+
+            return false; 
         }
         
         public HashSet<IGridSlot> GetDiagonalMoveData()
@@ -68,7 +107,7 @@ namespace CasualA.Board
             Debug.Log("MatchedDataList"+MatchedDataList.Count);
             if(MatchedDataList.Count > 0) 
             {
-                MatchedDataList.RemoveAt(MatchedDataList.Count - 1);
+                MatchedDataList.RemoveAt(MatchedDataList.Count - 2);
             }
         }
 

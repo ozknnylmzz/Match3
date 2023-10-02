@@ -60,31 +60,22 @@ namespace CasualA.Board
             {
                 if (!_lastGridPosition.HasValue || !_lastGridPosition.Value.Equals(targetGridPosition))
                 {
-                    _match3Game.SetDiagonalData(targetGridPosition);
+                    _match3Game.SetDiagonalData();
+                    _match3Game.CheckDiagonalMove();
                     Debug.Log("_lastGridPosition.Value"+_lastGridPosition.Value);
-                    if (_match3Game.CheckDiagonel(_lastGridPosition.Value))
-                    {
-                        Debug.Log("_lastGridPosition");
-                        _match3Game.ClearDiagonalSlot();
-                    }
-
-                    else
-                    {
+                
                         _lastGridPosition = targetGridPosition;
-                    }
-
-                    
+                        
                     _match3Game.IsSameItem(targetGridPosition);
                 }
             }
             else
             {
-                _lastGridPosition = null; // Opsiyonel: Pointer tahtanın dışına çıkınca son pozisyonu sıfırla
+                _lastGridPosition = null;
             }
         }
 
 
-        // EventManager<(GridPosition, GridPosition)>.Execute(BoardEvents.OnSwapDetected, (_selectedGridPosition, targetGridPosition));
 
 
         public void OnPointerUp(Vector2 pointerWorldPos)
