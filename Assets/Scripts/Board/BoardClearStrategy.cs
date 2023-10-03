@@ -19,11 +19,20 @@ namespace CasualA.Board
             IEnumerable<IGridSlot> slotsToClear = GetChainSlots(board, slotsToDestroy);
             IEnumerable<GridItem> itemsToClear = BoardHelper.GetItemsOfSlots(slotsToClear);
             
-           
             ClearAllSlots(slotsToClear);
             Refill(slotsToClear, itemsToClear);
         }
-        
+        public void ClearSlots(IBoard board, IEnumerable<IGridSlot> matchSlots, HashSet<IGridSlot> allSlots, ICollection<SlotClearDataPerMatch> slotClearDataPerMatchList)
+        {
+            IEnumerable<IGridSlot> chainSlots = GetChainSlots(board, matchSlots);
+            IEnumerable<GridItem> itemsToClear = BoardHelper.GetItemsOfSlots(chainSlots);
+
+            slotClearDataPerMatchList.Add(new SlotClearDataPerMatch(matchSlots, itemsToClear));
+
+            allSlots.UnionWith(chainSlots);
+            
+            
+        }
     
 
 

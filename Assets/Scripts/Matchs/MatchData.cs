@@ -11,7 +11,7 @@ namespace CasualA.Board
         public GridPosition MatchPosition;
         public int MatchItemId;
         public int DiagonelMoveCount;
-        public List<IGridSlot> MatchedDataList = new();
+        public  List<IGridSlot> MatchedDataList = new();
         public HashSet<IGridSlot> DiagonalMatchedDataList = new();
 
         public List<IGridSlot> SendDataList = new();
@@ -95,6 +95,7 @@ namespace CasualA.Board
             DiagonalMatchedDataList = DiagonalMoveData;
         }
 
+      
 
         public bool CheckDiagonalPosition(IBoard board)
         {

@@ -67,14 +67,7 @@ namespace CasualA.Board
             _matchData.SetMatchDatas(gridSlot);
         }
 
-        public void SetDiagonalData()
-        {
-            if (_matchData.MatchedDataList.Count<3)
-            {
-                return;
-            }
-            _matchData.SetDiagonalMoveData(BoardHelper.GetDiagonalSlots(_matchData.GetElementFromEnd(3), _board));
-        }
+    
 
         public void CheckDiagonalMove()
         {

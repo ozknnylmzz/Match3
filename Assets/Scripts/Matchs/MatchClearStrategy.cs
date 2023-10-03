@@ -33,7 +33,7 @@ namespace CasualA.Board
             _boardClearStrategy.ClearAllSlots(_allSlots);
 
 
-            // _boardClearStrategy.Refill(_allSlots, _allItems);
+            _boardClearStrategy.Refill(_allSlots, _allItems);
         }
 
 
@@ -41,7 +41,7 @@ namespace CasualA.Board
         {
             InitializeAllCollections();
             _allSlots.UnionWith(matchData.GetSendMatchedDataListAsSet());
-            ItemSelectionManager.RemoveSelectedSlots(_matchData.SendDataList);
+            ItemSelectionManager.RemoveSelectedSlots(_allSlots);
             CalculateHideJobs(board, matchData);
         }
 
@@ -51,7 +51,7 @@ namespace CasualA.Board
             allSlots.UnionWith(matchData.GetSendMatchedDataListAsSet()) ;
             
             List<GridItem> allItems = allSlots.Select(slot => slot.Item).ToList();
-            _boardClearStrategy.ClearSlots(board, allSlots);
+            _boardClearStrategy.ClearSlots(board, allSlots,_allSlots,_slotClearDataPerMatchList);
 
             JobsExecutor.AddJob(new ItemsHideJob(allItems));
         }

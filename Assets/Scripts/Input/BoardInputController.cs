@@ -40,7 +40,7 @@ namespace CasualA.Board
             // {
             //     return;
             // }
-
+            _counter = 0;
             _isDragMode = false;
             if (_match3Game.IsPointerOnBoard(pointerWorldPos, out _selectedGridPosition))
             {
@@ -77,6 +77,8 @@ namespace CasualA.Board
 
         public void OnPointerUp(Vector2 pointerWorldPos)
         {
+            
+
             if (_match3Game.IsMatchDetected(_counter))
             {
                 // _match3Game.SetDiagonalData();
@@ -88,7 +90,6 @@ namespace CasualA.Board
 
             // _match3Game.ClearMatchData();
             _isDragMode = false;
-            _counter = 0;
         }
     }
 }
