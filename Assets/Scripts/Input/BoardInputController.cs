@@ -11,6 +11,7 @@ namespace CasualA.Board
         private GridPosition _targetGridPosition;
         private bool _isDragMode;
 
+        private int _counter = 0;
 
         public void Initialize(Match3Game match3Game, IBoard board)
         {
@@ -41,7 +42,6 @@ namespace CasualA.Board
             // }
 
             _isDragMode = false;
-            _match3Game.ClearMatchData();
             if (_match3Game.IsPointerOnBoard(pointerWorldPos, out _selectedGridPosition))
             {
                 _isDragMode = true;
@@ -60,13 +60,12 @@ namespace CasualA.Board
             {
                 if (!_lastGridPosition.HasValue || !_lastGridPosition.Value.Equals(targetGridPosition))
                 {
-                    _match3Game.SetDiagonalData();
+                    _lastGridPosition = targetGridPosition;
                     _match3Game.CheckDiagonalMove();
-                    Debug.Log("_lastGridPosition.Value"+_lastGridPosition.Value);
-                
-                        _lastGridPosition = targetGridPosition;
-                        
                     _match3Game.IsSameItem(targetGridPosition);
+
+                    _counter++;
+                    Debug.Log("_counter" + _counter);
                 }
             }
             else
@@ -76,24 +75,20 @@ namespace CasualA.Board
         }
 
 
-
-
         public void OnPointerUp(Vector2 pointerWorldPos)
         {
-            if (!_match3Game.IsSwapAllowed)
+            if (_match3Game.IsMatchDetected(_counter))
             {
-                return;
-            }
-
-            if (_match3Game.IsMatchDetected())
-            {
+                // _match3Game.SetDiagonalData();
+                _match3Game.CheckMove(_counter);
                 Debug.Log("IsMatchDetected");
-                _match3Game.SwapItemsAsync();
+
                 return;
             }
 
             // _match3Game.ClearMatchData();
             _isDragMode = false;
+            _counter = 0;
         }
     }
 }

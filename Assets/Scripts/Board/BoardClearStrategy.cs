@@ -19,7 +19,6 @@ namespace CasualA.Board
             IEnumerable<IGridSlot> slotsToClear = GetChainSlots(board, slotsToDestroy);
             IEnumerable<GridItem> itemsToClear = BoardHelper.GetItemsOfSlots(slotsToClear);
             
-            Debug.Log("slotsToClear"+slotsToDestroy.Count());
            
             ClearAllSlots(slotsToClear);
             Refill(slotsToClear, itemsToClear);
@@ -32,6 +31,7 @@ namespace CasualA.Board
         {
             if (allItems.Count()>0)
             {
+                Debug.Log("allSlots"+allSlots.Count()+"allItems"+allItems.Count());
                 _fillStrategy.AddFillJobs(allSlots, allItems);
             }
           

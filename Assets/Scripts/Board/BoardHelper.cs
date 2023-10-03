@@ -176,13 +176,13 @@ namespace CasualA.Board
             return cornerSlots;
         }
 
-        private static HashSet<IGridSlot> GetDirectionalSlots(IGridSlot diagonelsSlot, IBoard board, GridPosition[] directions, int distance = 1)
+        private static HashSet<IGridSlot> GetDirectionalSlots(IGridSlot directionalSlots, IBoard board, GridPosition[] directions, int distance = 1)
         {
             HashSet<IGridSlot> slotsToDestroy = new HashSet<IGridSlot>();
 
             foreach (GridPosition direction in directions)
             {
-                GridPosition newPosition = diagonelsSlot.GridPosition + distance * direction;
+                GridPosition newPosition = directionalSlots.GridPosition + distance * direction;
 
                 if (board.IsPositionOnBoard(newPosition))
                 {

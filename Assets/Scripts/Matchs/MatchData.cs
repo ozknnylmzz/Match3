@@ -10,106 +10,150 @@ namespace CasualA.Board
     {
         public GridPosition MatchPosition;
         public int MatchItemId;
-        public List<IGridSlot> MatchedDataList=new ();
-        public HashSet<IGridSlot> DiagonalMatchedDataList=new ();
-        #region Variables
+        public int DiagonelMoveCount;
+        public List<IGridSlot> MatchedDataList = new();
+        public HashSet<IGridSlot> DiagonalMatchedDataList = new();
 
+        public List<IGridSlot> SendDataList = new();
+
+        public bool IsDiagonalMove;
+
+        #region Variables
 
         private int _matchItemId
         {
             set => MatchItemId = value;
+        }
+        private int _diagonelMoveCount
+        {
+            set => DiagonelMoveCount = value;
         }
 
         #endregion
 
         public IGridSlot GetElementFromEnd(int indexFromEnd)
         {
-            if(indexFromEnd <= 0 || indexFromEnd > MatchedDataList.Count)
+            if (indexFromEnd <= 0 || indexFromEnd > MatchedDataList.Count)
             {
-                Debug.Log("indexFromEnd"+indexFromEnd);
+                Debug.Log("indexFromEnd" + indexFromEnd);
             }
+
             return MatchedDataList[MatchedDataList.Count - indexFromEnd];
         }
-    
-        public void ClearMatchData()
+
+
+        public List<IGridSlot> GetLastNElements(int n)
         {
-            MatchedDataList.Clear();
-        }
-        public List<IGridSlot> GetUniqueMatchedDataList()
-        {
-            return MatchedDataList
-                .GroupBy(x => x) 
-                .Where(g => g.Count() == 1) 
-                .Select(g => g.Key) 
-                .ToList(); 
-        }
-        public bool CheckMatch()
-        {
-            if(MatchedDataList.Count < 3)
+            // MatchedDataList'in null veya n'den küçük olup olmadığını kontrol eder.
+            if (MatchedDataList == null || MatchedDataList.Count < n)
             {
-                return false;
+                throw new InvalidOperationException("Insufficient elements in MatchedDataList");
             }
 
-            if (!CheckMatchData())
+            // MatchedDataList'den son n elemanı alır.
+            List<IGridSlot> lastNElements = MatchedDataList.GetRange(MatchedDataList.Count - n, n);
+            Debug.Log("lastNElements" + lastNElements.Count);
+            Debug.Log("MatchedDataList" + MatchedDataList.Count);
+            for (int i = 0; i < lastNElements.Count; i++)
             {
-              return  false;
+                Debug.Log("lastNElements" + lastNElements[i].Item.ColorType);
             }
 
-           
-            var firstColorType = (int)MatchedDataList[0].Item.ColorType;
-            return MatchedDataList.All(gridSlot => (int)gridSlot.Item.ColorType == firstColorType);
+            return lastNElements;
         }
 
-        private bool CheckMatchData()
+        public HashSet<IGridSlot> GetSendMatchedDataListAsSet()
         {
-            IGridSlot lastElement = GetElementFromEnd(1);
-            IGridSlot thirdFromLastElement = GetElementFromEnd(3);
-           
-            return lastElement.Item.ColorType == thirdFromLastElement.Item.ColorType;
+            return new HashSet<IGridSlot>(SendDataList);
         }
 
-        public void SetDiagonalMoveData(HashSet<IGridSlot>DiagonalMoveData)
+        public bool CheckOrthogonalMatch( int counter)
         {
-            DiagonalMatchedDataList.Clear();
+            if (CheckSameDiagonalColors(counter))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        public bool CheckSameDiagonalColors(int counter)
+        {
+            List<IGridSlot> lastMatch = GetLastNElements(counter);
+            if (lastMatch[0].Item.ColorType == lastMatch[^1].Item.ColorType)
+            {
+                return lastMatch.All(x => x.Item.ColorType == lastMatch[0].Item.ColorType);
+            }
+
+            return false;
+        }
+
+        public void SetDiagonalMoveData(HashSet<IGridSlot> DiagonalMoveData)
+        {
+            // DiagonalMatchedDataList.Clear();
             DiagonalMatchedDataList = DiagonalMoveData;
         }
 
-        public bool CheckDiagonalMove()
-        {
-            GridPosition lastElementPosition = MatchedDataList[^1].GridPosition;
 
-            // Check if any grid position in DiagonalMatchedDataList is equal to lastElementPosition.
-            foreach(var diagonalElement in DiagonalMatchedDataList)
+        public bool CheckDiagonalPosition(IBoard board)
+        {
+            if (MatchedDataList.Count<3)
             {
-                if(diagonalElement.GridPosition.Equals(lastElementPosition))
+                return false;
+            }
+            IGridSlot lastElementPosition = MatchedDataList.LastOrDefault();
+            HashSet<IGridSlot> sideDirections = BoardHelper.GetSideSlots(MatchedDataList[^2], board);
+            foreach (var nearSlot in sideDirections)
+            {
+                if (nearSlot.GridPosition==lastElementPosition.GridPosition)
                 {
                     return true;
                 }
             }
 
-            return false; 
+            return false;
         }
         
-        public HashSet<IGridSlot> GetDiagonalMoveData()
-        {
-            Debug.Log("DiagonalMatchedDataList"+DiagonalMatchedDataList.Count);
-            return DiagonalMatchedDataList;
-        }
 
+        private List<(int, int)> GenerateCombinations(int counter)
+        {
+            var combinations = new List<(int, int)>();
+
+            for (int i = counter; i >= 3; i--)
+            {
+                combinations.Add((i, i - 2));
+            }
+
+            return combinations;
+        }
         public void SetMatchDatas(IGridSlot gridSlot)
         {
-            _matchItemId = (int)gridSlot.Item.ColorType;
-         
             MatchedDataList.Add(gridSlot);
         }
-        public void ClearDiagonal()
+
+        public void DiagonalLogic(int counter)
         {
-            Debug.Log("MatchedDataList"+MatchedDataList.Count);
-            if(MatchedDataList.Count > 0) 
+            if (MatchedDataList.Count > 3)
             {
-                MatchedDataList.RemoveAt(MatchedDataList.Count - 2);
+                var groupedByColor = GetLastNElements(counter).GroupBy(item => item.Item.ColorType);
+
+                var mostCommonColorGroup = groupedByColor
+                    .OrderByDescending(group => group.Count())
+                    .FirstOrDefault();
+
+                if (mostCommonColorGroup != null)
+                {
+                    SendDataList = mostCommonColorGroup.ToList();
+                }
             }
         }
 
+        public void OrthogonalLogic(int counter)
+        {
+            // SendDataList = new List<IGridSlot>();
+
+            SendDataList = GetLastNElements(counter);
+        }
     }
 }

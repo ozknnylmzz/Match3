@@ -46,8 +46,6 @@ namespace CasualA.Board
 
         private async UniTask DoSwap()
         {
-            // DisableSwap();
-
             EnableSwap();
         }
 
@@ -60,15 +58,12 @@ namespace CasualA.Board
             EventManager.Execute(BoardEvents.OnAfterJobsCompleted);
         }
 
-        public void ClearDiagonalSlot()
-        {
-            _matchData.ClearDiagonal();
-        }
+       
 
         public void IsSameItem(GridPosition gridPosition)
         {
             IGridSlot gridSlot = _board[gridPosition];
-            Debug.Log("SetMatchDatas" + gridSlot.Item.ColorType);
+            // Debug.Log("SetMatchDatas" + gridSlot.Item.ColorType);
             _matchData.SetMatchDatas(gridSlot);
         }
 
@@ -83,48 +78,51 @@ namespace CasualA.Board
 
         public void CheckDiagonalMove()
         {
+            if (_matchData.CheckDiagonalPosition(_board))
+            {
+                _matchData.IsDiagonalMove = true;
+                _matchData.DiagonelMoveCount++;
+            }
+        }
+        public void CheckMove(int counter)
+        {
             if (_matchData.MatchedDataList.Count<3)
             {
                 return;
             }
-            if (_matchData.CheckDiagonalMove())
-            {
-                Debug.Log("check dıagolanl");
-                _matchData.ClearDiagonal();
-            }
 
+            if (_matchData.IsDiagonalMove)
+            {
+                _matchData.DiagonalLogic(counter);
+            }
+           
+            else if (_matchData.CheckOrthogonalMatch(counter))
+            {
+                Debug.Log("CheckOrthogonalMatch");
+
+                _matchData.OrthogonalLogic(counter);
+            }
+            else
+            {
+                Debug.Log("match yok ");
+
+                return;
+            }
+          
+            SwapItemsAsync();
         }
         
-        
-
-        public bool CheckDiagonel(GridPosition gridPosition)
+        public bool IsMatchDetected(int counter)
         {
-            HashSet<IGridSlot> once    = _matchData.GetDiagonalMoveData();
-            foreach (IGridSlot slot in once)
+            if (counter<3)
             {
-                GridPosition position = slot.GridPosition;
-              
-                Debug.Log($"Row: {position.RowIndex}, Column: {position.ColumnIndex}");
+                return false;
             }
 
-            IGridSlot gridSlot = _board[gridPosition];
-            
-            Debug.Log("onceT"+gridSlot.GridPosition);
-            Debug.Log("onceT"+once.Contains(gridSlot));
-
-            return  once.Contains(gridSlot);
-            
+            return true;
         }
 
-        public bool IsMatchDetected()
-        {
-            return _matchData.CheckMatch();
-        }
-
-        public void ClearMatchData()
-        {
-            _matchData.ClearMatchData();
-        }
+       
 
         public bool IsPointerOnBoard(Vector3 pointerWorldPos, out GridPosition selectedGridPosition)
         {
@@ -140,7 +138,6 @@ namespace CasualA.Board
 
             _matchClearStrategy.CalculateMatchStrategyJobs(_board, _matchData);
             StartJobs();
-            // EventManager.Execute(BoardEvents.OnSwapAllowed);
         }
 
         public void DisableSwap()

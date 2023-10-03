@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace CasualA.Board
 {
     public static class BoardExtensions
@@ -24,6 +26,7 @@ namespace CasualA.Board
             {
                 return board[nextSlotPosition];
             }
+            Debug.Log("qweqweqwe");
 
             return null;
         }

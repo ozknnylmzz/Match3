@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CasualA.Board
 {
+  
     public class GridSlot : MonoBehaviour, IGridSlot
     {
         public bool CanSetItem => !HasItem;
