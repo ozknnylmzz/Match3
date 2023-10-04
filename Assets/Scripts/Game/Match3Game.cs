@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace CasualA.Board
@@ -58,64 +59,39 @@ namespace CasualA.Board
             EventManager.Execute(BoardEvents.OnAfterJobsCompleted);
         }
 
-       
 
         public void IsSameItem(GridPosition gridPosition)
         {
             IGridSlot gridSlot = _board[gridPosition];
-            // Debug.Log("SetMatchDatas" + gridSlot.Item.ColorType);
+            Debug.Log("SetMatchDatas" + gridSlot.Item.ColorType);
             _matchData.SetMatchDatas(gridSlot);
         }
 
-    
-
-        public void CheckDiagonalMove()
+        public bool CheckMove(int counter)
         {
-            if (_matchData.CheckDiagonalPosition(_board))
-            {
-                _matchData.IsDiagonalMove = true;
-                _matchData.DiagonelMoveCount++;
-            }
-        }
-        public void CheckMove(int counter)
-        {
-            if (_matchData.MatchedDataList.Count<3)
-            {
-                return;
-            }
-
-            if (_matchData.IsDiagonalMove)
-            {
-                _matchData.DiagonalLogic(counter);
-            }
-           
-            else if (_matchData.CheckOrthogonalMatch(counter))
-            {
-                Debug.Log("CheckOrthogonalMatch");
-
-                _matchData.OrthogonalLogic(counter);
-            }
-            else
-            {
-                Debug.Log("match yok ");
-
-                return;
-            }
-          
-            SwapItemsAsync();
-        }
-        
-        public bool IsMatchDetected(int counter)
-        {
-            if (counter<3)
+            // if (_matchData)
+            // {
+            //     
+            // }
+            
+            _matchData.SendMatchData(counter);
+            if (_matchData.SendDataList.Count<3)
             {
                 return false;
             }
-
             return true;
+
+            
+
         }
 
        
+
+        public bool IsMatchDetected()
+        {
+            return false;
+        }
+
 
         public bool IsPointerOnBoard(Vector3 pointerWorldPos, out GridPosition selectedGridPosition)
         {
@@ -127,7 +103,7 @@ namespace CasualA.Board
         public void EnableSwap()
         {
             _isSwapAllowed = true;
-            Debug.Log("CalculateMatchStrategyJobs" + _matchData.MatchedDataList.Count);
+            Debug.Log("_matchData.SendDataList.Count" + _matchData.SendDataList.Count);
 
             _matchClearStrategy.CalculateMatchStrategyJobs(_board, _matchData);
             StartJobs();

@@ -40,7 +40,6 @@ namespace CasualA.Board
         {
             if (allItems.Count()>0)
             {
-                Debug.Log("allSlots"+allSlots.Count()+"allItems"+allItems.Count());
                 _fillStrategy.AddFillJobs(allSlots, allItems);
             }
           

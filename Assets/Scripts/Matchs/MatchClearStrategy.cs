@@ -27,11 +27,9 @@ namespace CasualA.Board
         {
             CalculateJobDatas(board, boardMatchData);
 
-
             SaveAllItems();
 
             _boardClearStrategy.ClearAllSlots(_allSlots);
-
 
             _boardClearStrategy.Refill(_allSlots, _allItems);
         }

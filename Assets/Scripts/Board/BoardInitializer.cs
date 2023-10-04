@@ -36,7 +36,7 @@ namespace CasualA.Board
             _levelGenerator.Initialize(_board,_itemGenerator);
             _match3Game.Initialize(_strategyConfig,_matchData,_board);
             _levelLoader.Initialize(_levelGenerator);
-            _inputController.Initialize(_match3Game,_board);
+            _inputController.Initialize(_match3Game,_board,_matchData);
          
 
             EventManager.Execute(BoardEvents.OnBoardInitialized);

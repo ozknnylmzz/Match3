@@ -26,7 +26,6 @@ namespace CasualA.Board
             {
                 return board[nextSlotPosition];
             }
-            Debug.Log("qweqweqwe");
 
             return null;
         }

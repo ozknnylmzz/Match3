@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CasualA.Board
@@ -12,10 +13,17 @@ namespace CasualA.Board
         private bool _isDragMode;
 
         private int _counter = 0;
+        private float dragStartTime;
+        private GridPosition _lastPosition;
 
-        public void Initialize(Match3Game match3Game, IBoard board)
+        private MatchData _matchData;
+
+        private Dictionary<GridPosition, float> dragDurations = new Dictionary<GridPosition, float>();
+
+        public void Initialize(Match3Game match3Game, IBoard board, MatchData matchData)
         {
             _match3Game = match3Game;
+            _matchData = matchData;
             _board = board;
             SubcribeEvents();
         }
@@ -36,10 +44,8 @@ namespace CasualA.Board
 
         public void OnPointerDown(Vector2 pointerWorldPos)
         {
-            // if (!_match3Game.IsSwapAllowed)
-            // {
-            //     return;
-            // }
+            // _matchData.MatchedDataList.Clear();
+
             _counter = 0;
             _isDragMode = false;
             if (_match3Game.IsPointerOnBoard(pointerWorldPos, out _selectedGridPosition))
@@ -56,16 +62,33 @@ namespace CasualA.Board
             if (!_isDragMode)
                 return;
 
+            #region MyRegion
+
+            // GridPosition currentPos = _board.WorldToGridPosition(pointerWorldPos);
+            // if (currentPos == _lastPosition)
+            // {
+            //     AddDragDuration(currentPos, Time.time - dragStartTime);
+            //     dragStartTime = Time.time;
+            // }
+            // else
+            // {
+            //     dragStartTime = Time.time;
+            //     _lastPosition = currentPos;
+            // }
+
+            #endregion
+
             if (_match3Game.IsPointerOnBoard(pointerWorldPos, out GridPosition targetGridPosition))
             {
                 if (!_lastGridPosition.HasValue || !_lastGridPosition.Value.Equals(targetGridPosition))
                 {
                     _lastGridPosition = targetGridPosition;
-                    _match3Game.CheckDiagonalMove();
+
+
                     _match3Game.IsSameItem(targetGridPosition);
 
                     _counter++;
-                    Debug.Log("_counter" + _counter);
+                    // Debug.Log("_counter" + _counter);
                 }
             }
             else
@@ -77,19 +100,58 @@ namespace CasualA.Board
 
         public void OnPointerUp(Vector2 pointerWorldPos)
         {
-            
-
-            if (_match3Game.IsMatchDetected(_counter))
+            if (_counter < 3)
             {
-                // _match3Game.SetDiagonalData();
-                _match3Game.CheckMove(_counter);
-                Debug.Log("IsMatchDetected");
-
                 return;
+            }   
+
+
+            if (_match3Game.CheckMove(_counter))
+            {
+                if (!_matchData.CheckMove)
+                {
+                    return;
+                }
+                _match3Game.SwapItemsAsync();
+
             }
+            //
+            // if (_match3Game.IsMatchDetected(_counter))
+            // {
+            //    
+            //     
+            //     if (!_match3Game.CheckMixMove(_counter))
+            //     {
+            //         return;
+            //     }
+            //     if (!_match3Game.CheckMixMove(_counter))
+            //     {
+            //         return;
+            //     }
+            //     // _match3Game.SetDiagonalData();
+            //     _match3Game.CheckMove(_counter);
+            //     Debug.Log("IsMatchDetected");
+            //
+            //     return;
+            // }
 
             // _match3Game.ClearMatchData();
             _isDragMode = false;
+        }
+
+        void AddDragDuration(GridPosition position, float duration)
+        {
+            if (dragDurations.ContainsKey(position))
+            {
+                dragDurations[position] += duration;
+            }
+            else
+            {
+                dragDurations[position] = duration;
+            }
+
+            // Slot üzerinde ne kadar süre geçirildiğini yazdırma (isteğe bağlı)
+            Debug.Log(position + " üzerinde geçirilen toplam süre: " + dragDurations[position] + " saniye");
         }
     }
 }
