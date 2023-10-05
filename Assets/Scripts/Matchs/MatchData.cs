@@ -62,6 +62,16 @@ namespace CasualA.Board
             return removeMatchData;
         }
 
+        public bool CheckMatchData(int counter)
+        {
+           List<IGridSlot> sequenceMatchData= GetLastNElements(counter);
+           if (sequenceMatchData[0].Item.ColorType==sequenceMatchData[counter-1].Item.ColorType)
+           {
+               return true;
+           }
+               return false;
+        }
+
         public void SendMatchData(int counter)
         {
             List<IGridSlot> removeMatchData = GetRemoveData(GetLastNElements(counter));

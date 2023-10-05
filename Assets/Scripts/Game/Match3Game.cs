@@ -69,20 +69,18 @@ namespace CasualA.Board
 
         public bool CheckMove(int counter)
         {
-            // if (_matchData)
-            // {
-            //     
-            // }
+            if (!_matchData.CheckMatchData(counter))
+            {
+                return false;
+            }
             
             _matchData.SendMatchData(counter);
             if (_matchData.SendDataList.Count<3)
             {
                 return false;
             }
-            return true;
-
             
-
+            return true;
         }
 
        

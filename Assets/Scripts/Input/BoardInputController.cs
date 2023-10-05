@@ -108,10 +108,7 @@ namespace CasualA.Board
 
             if (_match3Game.CheckMove(_counter))
             {
-                if (!_matchData.CheckMove)
-                {
-                    return;
-                }
+                
                 _match3Game.SwapItemsAsync();
 
             }

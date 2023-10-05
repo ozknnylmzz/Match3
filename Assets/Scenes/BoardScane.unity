@@ -551,7 +551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rowCount: 8
   _columnCount: 8
-  _cellSpacing: 0.4
+  _cellSpacing: 0.1
   _grid: {fileID: 4460114610614211921, guid: a7701bd1a7c20e342af1c8fb1990d8dd, type: 3}
 --- !u!1 &1365560416
 GameObject:
