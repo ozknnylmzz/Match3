@@ -7,10 +7,6 @@ namespace Match3
     {
         private static readonly Dictionary<GridItem, List<Job>> _itemJobPairs = new();
 
-        private static int _freezeCounter = 0;
-
-        public static bool Unfreeze => _freezeCounter == 0;
-
         public static void AddJobToItems(IEnumerable<GridItem> items, Job job)
         {
             foreach (GridItem item in items)
@@ -53,14 +49,5 @@ namespace Match3
             itemJobPair.Key.SetState(ItemState.Hide);
         }
 
-        public static void SetFreeze()
-        {
-            _freezeCounter++;
-        }
-
-        public static void CancelFreeze()
-        {
-            _freezeCounter--;
-        }
     }
 }

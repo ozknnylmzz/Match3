@@ -29,15 +29,6 @@ namespace Match3
             _spriteRenderer.color = color;
         }
 
-        public void LayerUp(int value)
-        {
-            _spriteRenderer.sortingOrder += value;
-        }
-
-        public virtual void LayerDown(int value)
-        {
-            _spriteRenderer.sortingOrder -= value;
-        }
 
         private void ResetLayer()
         {

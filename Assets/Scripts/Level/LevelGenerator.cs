@@ -53,29 +53,6 @@ namespace Match3
 
             return initialBoardData;
         }
-
-        public void FillBoardWithReceivedData(ItemConfigureData[] itemDataList)
-        {
-            for (int i = 0; i < _board.RowCount; i++)
-            {
-                for (int j = 0; j < _board.ColumnCount; j++)
-                {
-                    ItemConfigureData itemConfigureData = itemDataList[i * _board.ColumnCount + j];
-
-                    ItemData itemData = _allItemsData.GetItemDataOfType(itemConfigureData.ItemType);
-
-                    IGridSlot currentSlot = _board[i, j];
-
-                    GridItem currentItem = _itemGenerator.GetItemWithId(itemData.ItemPrefab.ItemType,
-                        itemConfigureData.ConfigureType);
-
-
-                    _itemGenerator.SetItemOnSlot(currentItem, currentSlot);
-                }
-            }
-        }
-
-
         public void GenerateItemsPool(ItemType itemType)
         {
            

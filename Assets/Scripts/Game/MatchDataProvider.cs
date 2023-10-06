@@ -20,15 +20,14 @@ namespace Match3
 
             foreach (GridPosition gridPosition in gridPositions)
             {
-                UnionSharedData(matchedDataAllSlots, gridPosition, board, gridPositions);
+                UnionSharedData(matchedDataAllSlots, gridPosition, board);
             }
 
             return new BoardMatchData(matchedDataAllSlots.MatchDataList, matchedDataAllSlots.AllMatchedGridSlots);
         }
 
         private void UnionSharedData(MatchedDataAllSlots matchedDataAllSlots, GridPosition gridPosition,
-            IBoard board,
-            params GridPosition[] gridPositions)
+            IBoard board)
         {
             HashSet<MatchSequence> matchSequences = GetMatchSequences(matchedDataAllSlots, gridPosition, board);
             if (matchSequences.Count > 0)

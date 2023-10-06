@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Match3
@@ -34,7 +33,7 @@ namespace Match3
             }
 
             // await sequence;
-
+            // await UniTask.Delay(200);
             foreach (GridItem item in _items)
             {
                 item.Kill(isSpecialKill: false);

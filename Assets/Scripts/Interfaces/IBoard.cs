@@ -13,8 +13,6 @@ namespace Match3
 
         public GridPosition[] AllGridPositions { get; }
 
-        public bool IsPointerInBounds(Vector3 pointerWorldPos, out GridPosition gridPosition);
-
         public bool IsPointerOnBoard(Vector3 pointerWorldPos, out GridPosition gridPosition);
 
         public bool IsPositionInBounds(GridPosition gridPosition);

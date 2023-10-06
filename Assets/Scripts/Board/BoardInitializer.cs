@@ -30,13 +30,13 @@ namespace Match3
         private void InitializeGame()
         {
             DOTween.Init().SetCapacity(500, 500);
-            _gameConfig.Initialize(_itemGenerator);
+            _gameConfig.Initialize();
             _strategyConfig.Initialize(_board, _itemGenerator);
             _board.Initialize();
             _levelGenerator.Initialize(_board, _itemGenerator, _gameConfig);
             _match3Game.Initialize(_strategyConfig, _gameConfig, _board);
             _levelLoader.Initialize(_levelGenerator);
-            _inputController.Initialize(_match3Game, _board);
+            _inputController.Initialize(_match3Game);
 
 
             EventManager.Execute(BoardEvents.OnBoardInitialized);

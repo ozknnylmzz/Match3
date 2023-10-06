@@ -12,7 +12,6 @@ namespace Match3
         private IBoard _board;
         private MatchData _matchData;
         private MatchClearStrategy _matchClearStrategy;
-        private BoardClearStrategy _boardClearStrategy;
         private JobsExecutor _jobsExecutor;
 
         private ItemSwapper _itemSwapper;
@@ -22,7 +21,6 @@ namespace Match3
         {
             _board = board;
 
-            _boardClearStrategy = strategyConfig.BoardClearStrategy;
             _matchClearStrategy = strategyConfig.MatchClearStrategy;
             _jobsExecutor = new JobsExecutor();
             _itemSwapper = new ItemSwapper();
@@ -65,11 +63,7 @@ namespace Match3
                 SwapItemsBack(selectedSlot, targetSlot);
             }
         }
-        private async UniTask DoSwap()
-        {
-            EnableSwap();
-        }
-
+      
 
         private async void StartJobs()
         {
@@ -80,11 +74,6 @@ namespace Match3
             EnableSwap();
         }
 
-
-       
-       
-     
-        
         
         public void CheckAutoMatch()
         {
@@ -117,12 +106,7 @@ namespace Match3
             await SwapItemsAnimation(selectedSlot, targetSlot);
             EnableSwap();
         }
-        public void SwapItemsData(IGridSlot selectedSlot, IGridSlot targetSlot)
-        {
-            _itemSwapper.SwapItemsData(selectedSlot, targetSlot);
-        }
-
-
+      
         public bool IsPointerOnBoard(Vector3 pointerWorldPos, out GridPosition selectedGridPosition)
         {
             return _board.IsPointerOnBoard(pointerWorldPos, out selectedGridPosition);

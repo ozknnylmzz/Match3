@@ -6,7 +6,6 @@ namespace Match3
     public class BoardInputController : MonoBehaviour
     {
         private Match3Game _match3Game;
-        private IBoard _board;
 
         private GridPosition _selectedGridPosition;
         private GridPosition _targetGridPosition;
@@ -15,10 +14,9 @@ namespace Match3
         public GridPosition SelectedGridPosition => _selectedGridPosition;
         public GridPosition TargetGridPosition => _targetGridPosition;
 
-        public void Initialize(Match3Game match3Game, IBoard board)
+        public void Initialize(Match3Game match3Game)
         {
             _match3Game = match3Game;
-            _board = board;
             SubcribeEvents();
         }
 

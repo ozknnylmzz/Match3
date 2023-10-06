@@ -46,17 +46,6 @@ namespace Match3
             slot.SetItem(item);
         }
 
-        public void ClearItemOnSlot(IGridSlot slot)
-        {
-            ReturnItemToPool(slot.Item);
-
-            slot.ClearSlot();
-        }
-
-        public int GetActiveItemCount(ItemType itemType)
-        {
-            return _itemPools[itemType].ActiveCount;
-        }
 
         private void ConfigureItem(GridItem item, int configureType)
         {

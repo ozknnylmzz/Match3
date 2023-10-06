@@ -14,10 +14,6 @@ namespace Match3
             item.SetPathDistance(pathDistance);
         }
 
-        public void ReplaceItem(GridItem item)
-        {
-            Item = item;
-            DestinationSlot.SetItem(item);
-        }
+       
     } 
 }

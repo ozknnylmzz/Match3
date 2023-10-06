@@ -67,11 +67,7 @@ namespace Match3
             }
         }
 
-        public bool IsPointerInBounds(Vector3 pointerWorldPos, out GridPosition gridPosition)
-        {
-            gridPosition = WorldToGridPosition(pointerWorldPos);
-            return IsPositionInBounds(gridPosition);
-        }
+       
 
         public bool IsPointerOnBoard(Vector3 pointerWorldPos, out GridPosition gridPosition)
         {

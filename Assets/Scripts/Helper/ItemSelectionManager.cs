@@ -10,10 +10,6 @@ namespace Match3
         private static readonly HashSet<IGridSlot> _selectableSlots = new();
         private static readonly HashSet<IGridSlot> _selectedSlots = new();
 
-        public static void AddSelectorItem(ISelectorItem item)
-        {
-            _selectorItems.Add(item);
-        }
 
         public static IEnumerable<IGridSlot> ExecuteSelectionRequests(IBoard board, IEnumerable<IGridSlot> unselectableSlots)
         {
@@ -44,11 +40,6 @@ namespace Match3
             _selectedSlots.UnionWith(slots);
         }
 
-        public static void AddSlots(IEnumerable<IGridSlot> slots)
-        {
-            _selectableSlots.UnionWith(slots);
-            _selectedSlots.ExceptWith(slots);
-        }
 
         public static void Reset(IBoard board)
         {

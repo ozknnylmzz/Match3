@@ -65,20 +65,7 @@ namespace Match3
             }
         }
 
-        public static List<ItemsFallJob> GetFallJobs(IBoard board)
-        {
-            List<ItemsFallJob> newFallJobs = new();
-            
-            for (int i = 0; i < board.ColumnCount; i++)
-            {
-                if (_fallJobPairs.ContainsKey(i))
-                {
-                    newFallJobs.AddRange(_fallJobPairs[i]);
-                }
-            }
-
-            return newFallJobs;
-        }
+       
 
         private void ClearJobs()
         {

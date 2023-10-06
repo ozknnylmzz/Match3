@@ -11,7 +11,7 @@ namespace Match3
         {
             FallDownFillStrategy = new FallDownFillStrategy(board, itemGenerator);
             BoardClearStrategy = new BoardClearStrategy(FallDownFillStrategy);
-            MatchClearStrategy = new MatchClearStrategy(BoardClearStrategy, itemGenerator);
+            MatchClearStrategy = new MatchClearStrategy(BoardClearStrategy);
         }
     }
 }

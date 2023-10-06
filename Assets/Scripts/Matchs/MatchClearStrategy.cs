@@ -7,7 +7,6 @@ namespace Match3
     public class MatchClearStrategy
     {
         private readonly BoardClearStrategy _boardClearStrategy;
-        private readonly ItemGenerator _itemGenerator;
 
         private List<SlotClearDataPerMatch> _slotClearDataPerMatchList;
         private HashSet<IGridSlot> _allSlots;
@@ -15,11 +14,9 @@ namespace Match3
         public static event Func<IBoard, IEnumerable<IGridSlot>, IEnumerable<IGridSlot>> SideMatchItemRequest;
         private MatchData _matchData;
 
-        public MatchClearStrategy(BoardClearStrategy boardClearStrategy, ItemGenerator itemGenerator
-            )
+        public MatchClearStrategy(BoardClearStrategy boardClearStrategy)
         {
             _boardClearStrategy = boardClearStrategy;
-            _itemGenerator = itemGenerator;
         }
 
         public void CalculateMatchStrategyJobs(IBoard board, BoardMatchData boardMatchData)
