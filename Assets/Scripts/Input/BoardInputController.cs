@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class BoardInputController : MonoBehaviour
     {
@@ -12,18 +12,12 @@ namespace CasualA.Board
         private GridPosition _targetGridPosition;
         private bool _isDragMode;
 
-        private int _counter = 0;
-        private float dragStartTime;
-        private GridPosition _lastPosition;
+        public GridPosition SelectedGridPosition => _selectedGridPosition;
+        public GridPosition TargetGridPosition => _targetGridPosition;
 
-        private MatchData _matchData;
-
-        private Dictionary<GridPosition, float> dragDurations = new Dictionary<GridPosition, float>();
-
-        public void Initialize(Match3Game match3Game, IBoard board, MatchData matchData)
+        public void Initialize(Match3Game match3Game, IBoard board)
         {
             _match3Game = match3Game;
-            _matchData = matchData;
             _board = board;
             SubcribeEvents();
         }
@@ -44,111 +38,75 @@ namespace CasualA.Board
 
         public void OnPointerDown(Vector2 pointerWorldPos)
         {
-            // _matchData.MatchedDataList.Clear();
+            if (!_match3Game.IsSwapAllowed)
+            {
+                return;
+            }
 
-            _counter = 0;
             _isDragMode = false;
+
             if (_match3Game.IsPointerOnBoard(pointerWorldPos, out _selectedGridPosition))
             {
                 _isDragMode = true;
-                // _match3Game.SetMatchData(_selectedGridPosition);
             }
         }
 
-        GridPosition? _lastGridPosition = new GridPosition();
 
         public void OnPointerDrag(Vector2 pointerWorldPos)
         {
             if (!_isDragMode)
                 return;
 
-            #region MyRegion
-
-            // GridPosition currentPos = _board.WorldToGridPosition(pointerWorldPos);
-            // if (currentPos == _lastPosition)
-            // {
-            //     AddDragDuration(currentPos, Time.time - dragStartTime);
-            //     dragStartTime = Time.time;
-            // }
-            // else
-            // {
-            //     dragStartTime = Time.time;
-            //     _lastPosition = currentPos;
-            // }
-
-            #endregion
-
-            if (_match3Game.IsPointerOnBoard(pointerWorldPos, out GridPosition targetGridPosition))
+            if (!_match3Game.IsPointerOnBoard(pointerWorldPos, out GridPosition targetGridPosition))
             {
-                if (!_lastGridPosition.HasValue || !_lastGridPosition.Value.Equals(targetGridPosition))
-                {
-                    _lastGridPosition = targetGridPosition;
-
-
-                    _match3Game.IsSameItem(targetGridPosition);
-
-                    _counter++;
-                    // Debug.Log("_counter" + _counter);
-                }
+                _isDragMode = false;
+                return;
             }
-            else
+
+            if (!IsSideGrid(targetGridPosition))
             {
-                _lastGridPosition = null;
+                return;
             }
+
+            _isDragMode = false;
+
+            SwapAsync((_selectedGridPosition, targetGridPosition));
+            EventManager<(GridPosition, GridPosition)>.Execute(BoardEvents.OnSwapDetected, (_selectedGridPosition, targetGridPosition));
         }
 
 
         public void OnPointerUp(Vector2 pointerWorldPos)
         {
-            if (_counter < 3)
+            
+            _isDragMode = false;
+            if (!_match3Game.IsSwapAllowed)
             {
                 return;
-            }   
-
-
-            if (_match3Game.CheckMove(_counter))
-            {
-                
-                _match3Game.SwapItemsAsync();
-
             }
-            //
-            // if (_match3Game.IsMatchDetected(_counter))
-            // {
-            //    
-            //     
-            //     if (!_match3Game.CheckMixMove(_counter))
-            //     {
-            //         return;
-            //     }
-            //     if (!_match3Game.CheckMixMove(_counter))
-            //     {
-            //         return;
-            //     }
-            //     // _match3Game.SetDiagonalData();
-            //     _match3Game.CheckMove(_counter);
-            //     Debug.Log("IsMatchDetected");
-            //
-            //     return;
-            // }
 
-            // _match3Game.ClearMatchData();
+            if (!_match3Game.IsPointerOnBoard(pointerWorldPos, out _selectedGridPosition))
+            {
+                return;
+            }
+
             _isDragMode = false;
+
         }
 
-        void AddDragDuration(GridPosition position, float duration)
+        private bool IsSideGrid(GridPosition gridPosition)
         {
-            if (dragDurations.ContainsKey(position))
-            {
-                dragDurations[position] += duration;
-            }
-            else
-            {
-                dragDurations[position] = duration;
-            }
+            bool isSideGrid = gridPosition.Equals(_selectedGridPosition + GridPosition.Up) ||
+                              gridPosition.Equals(_selectedGridPosition + GridPosition.Down) ||
+                              gridPosition.Equals(_selectedGridPosition + GridPosition.Left) ||
+                              gridPosition.Equals(_selectedGridPosition + GridPosition.Right);
 
-            // Slot üzerinde ne kadar süre geçirildiğini yazdırma (isteğe bağlı)
-            Debug.Log(position + " üzerinde geçirilen toplam süre: " + dragDurations[position] + " saniye");
+            return isSideGrid;
+        }
+        
+        private void SwapAsync((GridPosition selectedGridPosition, GridPosition targetGridPosition) swapInput)
+        {
+            _match3Game.DisableSwap();
+            _match3Game.SwapItemsAsync(swapInput.selectedGridPosition, swapInput.targetGridPosition);
         }
     }
 }

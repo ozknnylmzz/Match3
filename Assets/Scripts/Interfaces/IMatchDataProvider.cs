@@ -1,4 +1,4 @@
-namespace CasualA.Board
+namespace Match3
 {
     public interface IMatchDataProvider
     {

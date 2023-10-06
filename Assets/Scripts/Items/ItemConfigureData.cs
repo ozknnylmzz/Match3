@@ -1,4 +1,4 @@
-﻿namespace CasualA.Board
+﻿namespace Match3
 {
     [System.Serializable]
     public struct ItemConfigureData

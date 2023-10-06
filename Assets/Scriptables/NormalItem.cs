@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class NormalItem : SpriteItem
     {
         [SerializeField] private ColoredGlowItemConfigureData _configureData;
 
         public override ItemType ItemType => ItemType.BoardItem;
-        public override int DefaultScore => Constants.BOARD_ITEM_SCORE;
+        public override int DefaultScore => 0;
         public override bool CanBeKilled => true;
 
         public override void ConfigureItem(int configureType)

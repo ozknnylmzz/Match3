@@ -2,68 +2,106 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
-    public class MatchDataProvider 
+    public class MatchDataProvider :IMatchDataProvider
     {
-        private readonly MatchData _matchDeta;
+        private readonly IMatchDetector[] _matchDetectors;
 
-        public MatchDataProvider(MatchData matchDeta)
+        public MatchDataProvider(IMatchDetector[] matchDetectors)
         {
-            _matchDeta = matchDeta;
+            _matchDetectors = matchDetectors;
         }
 
 
-        // public MatchData GetMatchData(IBoard board, params GridPosition[] gridPositions)
-        // {
-        //
-        //     foreach (GridPosition gridPosition in gridPositions)
-        //     {
-        //         UnionSharedData(gridPosition, board, gridPositions);
-        //     }
-        //
-        //     return _matchDeta;
-        // }
-        //
-        // private void UnionSharedData(GridPosition gridPosition,
-        //     IBoard board,
-        //     params GridPosition[] gridPositions)
-        // {
-        //     MatchData matchData = new MatchData(gridPosition, board[gridPosition].ItemId);
-        //     List<MatchData> matchDatas = new List<MatchData>() { matchData };
-        //
-        //     if (IsSharedMatchData(matchData, matchedDataAllSlots.MatchDataList,
-        //             out List<MatchData> sharedMatchDatas))
-        //     {
-        //         foreach (MatchData sharedMatchData in sharedMatchDatas)
-        //         {
-        //             matchedDataAllSlots.MatchDataList.Remove(sharedMatchData);
-        //
-        //             matchSequences.UnionWith(sharedMatchData.MatchedSequences);
-        //
-        //             matchData.SetMatchDatas(matchSequences, gridPosition, board[gridPosition].ItemId,
-        //                 gridPositions.Length > 2);
-        //         }
-        //     }
-        // }
+        public BoardMatchData GetMatchData(IBoard board, params GridPosition[] gridPositions)
+        {
+            MatchedDataAllSlots matchedDataAllSlots = new MatchedDataAllSlots();
+
+            foreach (GridPosition gridPosition in gridPositions)
+            {
+                UnionSharedData(matchedDataAllSlots, gridPosition, board, gridPositions);
+            }
+
+            return new BoardMatchData(matchedDataAllSlots.MatchDataList, matchedDataAllSlots.AllMatchedGridSlots);
+        }
+
+        private void UnionSharedData(MatchedDataAllSlots matchedDataAllSlots, GridPosition gridPosition,
+            IBoard board,
+            params GridPosition[] gridPositions)
+        {
+            HashSet<MatchSequence> matchSequences = GetMatchSequences(matchedDataAllSlots, gridPosition, board);
+            if (matchSequences.Count > 0)
+            {
+                MatchData matchData = new MatchData(matchSequences, board[gridPosition].ItemId);
 
 
-        // private bool IsSharedMatchData(MatchData currentMatchData, List<MatchData> matchDataList,
-        //     out List<MatchData> sharedMatchData)
-        // {
-        //     bool isSharedFound = false;
-        //     sharedMatchData = new List<MatchData>();
-        //     
-        //         if (currentMatchData.MatchedGridSlots.Overlaps(matchData.MatchedGridSlots))
-        //         {
-        //             sharedMatchData.Add(matchData);
-        //             isSharedFound = true;
-        //         }
-        //     
-        //
-        //     return isSharedFound;
-        // }
+                if (IsSharedMatchData(matchData, matchedDataAllSlots.MatchDataList,
+                        out List<MatchData> sharedMatchDatas))
+                {
+                    foreach (MatchData sharedMatchData in sharedMatchDatas)
+                    {
+                        matchedDataAllSlots.MatchDataList.Remove(sharedMatchData);
+
+                        matchSequences.UnionWith(sharedMatchData.MatchedSequences);
+
+                        matchData.SetMatchDatas(matchSequences, board[gridPosition].ItemId);
+                    }
+                }
+
+                matchedDataAllSlots.MatchDataList.Add(matchData);
+            }
+        }
+
+        private HashSet<MatchSequence> GetMatchSequences(MatchedDataAllSlots matchedDataAllSlots,
+            GridPosition gridPosition, IBoard board)
+        {
+            HashSet<MatchSequence> matchSequences = new HashSet<MatchSequence>();
+
+            foreach (IMatchDetector matchDetector in _matchDetectors)
+            {
+                MatchSequence sequence = matchDetector.GetMatchSequence(board, gridPosition);
+
+                if (sequence == null)
+                {
+                    continue;
+                }
+
+                matchedDataAllSlots.AllMatchedGridSlots.UnionWith(sequence.MatchedGridSlots);
+
+                matchSequences.Add(sequence);
+            }
+
+            return matchSequences;
+        }
+        private bool IsSharedMatchData(MatchData currentMatchData, List<MatchData> matchDataList,
+            out List<MatchData> sharedMatchData)
+        {
+            bool isSharedFound = false;
+            sharedMatchData = new List<MatchData>();
+            foreach (MatchData matchData in matchDataList)
+            {
+                if (currentMatchData.MatchedGridSlots.Overlaps(matchData.MatchedGridSlots))
+                {
+                    sharedMatchData.Add(matchData);
+                    isSharedFound = true;
+                }
+            }
+
+            return isSharedFound;
+        }
+       
     }
 
-   
+    public class MatchedDataAllSlots
+    {
+        public List<MatchData> MatchDataList;
+        public HashSet<IGridSlot> AllMatchedGridSlots;
+
+        public MatchedDataAllSlots()
+        {
+            MatchDataList = new List<MatchData>();
+            AllMatchedGridSlots = new HashSet<IGridSlot>();
+        }
+    }
 }

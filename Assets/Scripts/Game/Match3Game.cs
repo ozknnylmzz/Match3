@@ -3,30 +3,30 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class Match3Game : MonoBehaviour
     {
         private bool _isSwapAllowed = true;
-
+        private IMatchDataProvider _matchDataProvider;
         private IBoard _board;
         private MatchData _matchData;
         private MatchClearStrategy _matchClearStrategy;
         private BoardClearStrategy _boardClearStrategy;
         private JobsExecutor _jobsExecutor;
 
-
+        private ItemSwapper _itemSwapper;
         public bool IsSwapAllowed => _isSwapAllowed;
 
-        public void Initialize(StrategyConfig strategyConfig, MatchData matchData, IBoard board)
+        public void Initialize(StrategyConfig strategyConfig, GameConfig gameConfig, IBoard board)
         {
             _board = board;
 
             _boardClearStrategy = strategyConfig.BoardClearStrategy;
             _matchClearStrategy = strategyConfig.MatchClearStrategy;
             _jobsExecutor = new JobsExecutor();
-
-            _matchData = matchData;
+            _itemSwapper = new ItemSwapper();
+            _matchDataProvider = gameConfig.MatchDataProvider;
         }
 
         private void OnEnable()
@@ -40,11 +40,31 @@ namespace CasualA.Board
         }
 
 
-        public async void SwapItemsAsync()
+        public async void SwapItemsAsync(GridPosition selectedPosition, GridPosition targetPosition)
         {
-            await DoSwap();
+            IGridSlot selectedSlot = _board[selectedPosition];
+            IGridSlot targetSlot = _board[targetPosition];
+            await DoNormalSwap(selectedSlot, targetSlot);
         }
+        private async UniTask DoNormalSwap(IGridSlot selectedSlot, IGridSlot targetSlot)
+        {
+            await SwapItemsAnimation(selectedSlot, targetSlot);
 
+            if (IsMatchDetected(out BoardMatchData boardMatchData, selectedSlot.GridPosition, targetSlot.GridPosition))
+            {
+                EventManager.Execute(BoardEvents.OnSwapSuccess);
+
+                ItemSelectionManager.Reset(_board);
+                _matchClearStrategy.CalculateMatchStrategyJobs(_board, boardMatchData);
+
+                CheckAutoMatch();
+                StartJobs();
+            }
+            else
+            {
+                SwapItemsBack(selectedSlot, targetSlot);
+            }
+        }
         private async UniTask DoSwap()
         {
             EnableSwap();
@@ -57,37 +77,49 @@ namespace CasualA.Board
             await _jobsExecutor.ExecuteJobsAsync();
 
             EventManager.Execute(BoardEvents.OnAfterJobsCompleted);
+            EnableSwap();
         }
 
-
-        public void IsSameItem(GridPosition gridPosition)
-        {
-            IGridSlot gridSlot = _board[gridPosition];
-            Debug.Log("SetMatchDatas" + gridSlot.Item.ColorType);
-            _matchData.SetMatchDatas(gridSlot);
-        }
-
-        public bool CheckMove(int counter)
-        {
-            if (!_matchData.CheckMatchData(counter))
-            {
-                return false;
-            }
-            
-            _matchData.SendMatchData(counter);
-            if (_matchData.SendDataList.Count<3)
-            {
-                return false;
-            }
-            
-            return true;
-        }
 
        
-
-        public bool IsMatchDetected()
+       
+     
+        
+        
+        public void CheckAutoMatch()
         {
-            return false;
+            EventManager.Execute(BoardEvents.OnSequenceDataCalculated);
+
+            while (IsMatchDetected(out BoardMatchData boardMatchData, _board.AllGridPositions) )
+            {
+                ItemSelectionManager.Reset(_board);
+
+                _matchClearStrategy.CalculateMatchStrategyJobs(_board, boardMatchData);
+                EventManager.Execute(BoardEvents.OnSequenceDataCalculated);
+            }
+        }
+        
+        public bool IsMatchDetected(out BoardMatchData boardMatchData, params GridPosition[] gridPositions)
+        {
+            boardMatchData = _matchDataProvider.GetMatchData(_board, gridPositions);
+
+            return boardMatchData.MatchExists;
+        }   
+     
+        
+        private UniTask SwapItemsAnimation(IGridSlot selectedSlot, IGridSlot targetSlot)
+        {
+            return _itemSwapper.SwapItems(selectedSlot, targetSlot, this);
+        }
+
+        private async void SwapItemsBack(IGridSlot selectedSlot, IGridSlot targetSlot)
+        {
+            await SwapItemsAnimation(selectedSlot, targetSlot);
+            EnableSwap();
+        }
+        public void SwapItemsData(IGridSlot selectedSlot, IGridSlot targetSlot)
+        {
+            _itemSwapper.SwapItemsData(selectedSlot, targetSlot);
         }
 
 
@@ -101,10 +133,6 @@ namespace CasualA.Board
         public void EnableSwap()
         {
             _isSwapAllowed = true;
-            Debug.Log("_matchData.SendDataList.Count" + _matchData.SendDataList.Count);
-
-            _matchClearStrategy.CalculateMatchStrategyJobs(_board, _matchData);
-            StartJobs();
         }
 
         public void DisableSwap()

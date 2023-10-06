@@ -3,7 +3,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class ItemsFallJob : Job
     {

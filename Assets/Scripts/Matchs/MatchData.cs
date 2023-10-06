@@ -4,103 +4,111 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class MatchData
     {
+        public HashSet<MatchSequence> MatchedSequences;
         public GridPosition MatchPosition;
         public int MatchItemId;
-        public int DiagonelMoveCount;
-        public List<IGridSlot> MatchedDataList = new();
-        public HashSet<IGridSlot> DiagonalMatchedDataList = new();
-
-        public List<IGridSlot> SendDataList = new();
-
-        public bool CheckMove;
+        public HashSet<IGridSlot> MatchedGridSlots;
 
         #region Variables
+
+        private HashSet<MatchSequence> _matchedSequences
+        {
+            set => MatchedSequences = value;
+        }
+
+        private HashSet<IGridSlot> _matchedGridSlots
+        {
+            set => MatchedGridSlots = value;
+        }
+
 
         private int _matchItemId
         {
             set => MatchItemId = value;
         }
 
-        private int _diagonelMoveCount
-        {
-            set => DiagonelMoveCount = value;
-        }
-
         #endregion
 
-        public List<IGridSlot> GetRemoveData(List<IGridSlot> matchdataList)
+        public MatchData(HashSet<MatchSequence> matchedSequences, int matchItemId)
         {
-            List<IGridSlot> removeMatchData = new List<IGridSlot>();
-            List<IGridSlot> sendData = matchdataList;
-            for (int i = 0; i < matchdataList.Count - 2; i++)
+            SetMatchDatas(matchedSequences, matchItemId);
+        }
+
+
+        public void SetMatchDatas(HashSet<MatchSequence> matchedSequences, int matchItemId)
+        {
+            _matchedSequences = matchedSequences;
+            _matchItemId = matchItemId;
+            _matchedGridSlots = GetMatchedGridSlots();
+        }
+
+
+        private HashSet<IGridSlot> GetMatchedGridSlots()
+        {
+            HashSet<IGridSlot> matchedGridSlots = new();
+
+            foreach (MatchSequence sequence in MatchedSequences)
             {
-                if (sendData[i].Item.ColorType == sendData[i + 1].Item.ColorType)
-                {
-                    CheckMove = true;
-                }
-                else
-                {
-                    if (sendData[i].Item.ColorType == sendData[i + 2].Item.ColorType)
-                    {
-                        removeMatchData.Add(sendData[i+1]);
-                        sendData.RemoveAt(i+1);
-                        // MatchedDataList.RemoveAt(i+1);
-                        CheckMove = true;
-                    }
-                    else
-                    {
-                        CheckMove = false;
-                        break;
-                    }
-                }
+                matchedGridSlots.UnionWith(sequence.MatchedGridSlots);
             }
 
-            return removeMatchData;
-        }
 
-        public bool CheckMatchData(int counter)
-        {
-           List<IGridSlot> sequenceMatchData= GetLastNElements(counter);
-           if (sequenceMatchData[0].Item.ColorType==sequenceMatchData[counter-1].Item.ColorType)
-           {
-               return true;
-           }
-               return false;
-        }
-
-        public void SendMatchData(int counter)
-        {
-            List<IGridSlot> removeMatchData = GetRemoveData(GetLastNElements(counter));
-
-            SendDataList = GetLastNElements(counter).Where(item => !removeMatchData.Contains(item)).ToList();
+            return matchedGridSlots;
         }
 
 
-        public IGridSlot GetElementFromEnd(int indexFromEnd)
+        private List<IGridSlot> FindMaxRowSlots()
         {
-            return MatchedDataList[MatchedDataList.Count - indexFromEnd];
+            List<int> maxRowIndexes = MatchedGridSlots.Select(slot => slot.GridPosition.RowIndex).ToList();
+            var maxRowIndex = maxRowIndexes.Max();
+            List<IGridSlot> maxRowSlots =
+                MatchedGridSlots.Where(slot =>
+                        slot.GridPosition.RowIndex == maxRowIndex && slot.Item.ItemState == ItemState.WaitingToFall)
+                    .ToList();
+            return maxRowSlots;
         }
 
-
-        public List<IGridSlot> GetLastNElements(int n)
+        private IGridSlot FindMinColumSlot(List<IGridSlot> maxRowSlots)
         {
-            List<IGridSlot> lastNElements = MatchedDataList.GetRange(MatchedDataList.Count - n, n);
+            List<int> minColumIndexes = maxRowSlots.Select(slot => slot.GridPosition.ColumnIndex).ToList();
+            int minColumIndex = minColumIndexes.Min();
 
-            return lastNElements;
+            IGridSlot minColSlot =
+                maxRowSlots.FirstOrDefault(slot => slot.GridPosition.ColumnIndex == minColumIndex);
+
+            return minColSlot;
         }
 
-        public HashSet<IGridSlot> GetSendMatchedDataListAsSet()
+        private IGridSlot FindLongMatchedGridSlotsForRow()
         {
-            return new HashSet<IGridSlot>(SendDataList);
-        }
+            int maxRepeatedValue = -1;
 
-        public void SetMatchDatas(IGridSlot gridSlot)
-        {
-            MatchedDataList.Add(gridSlot);
+            List<int> rowList = MatchedGridSlots.Select(matchData => matchData.GridPosition.RowIndex).ToList();
+
+            maxRepeatedValue = rowList
+                .GroupBy(x => x)
+                .OrderByDescending(x => x.Count())
+                .Select(x => x.Key)
+                .FirstOrDefault();
+
+            List<IGridSlot> longMatchedGridSlots = MatchedGridSlots
+                .Where(matchDataSlot => maxRepeatedValue == matchDataSlot.GridPosition.RowIndex).ToList();
+
+            List<int> columnList =
+                longMatchedGridSlots.Select(matchData => matchData.GridPosition.ColumnIndex).ToList();
+
+            int middleValue = columnList.OrderBy(x => x).Skip((columnList.Count - 1) / 2).First();
+
+            IGridSlot boosterAutomatchPos =
+                longMatchedGridSlots.FirstOrDefault(slot =>
+                    slot.GridPosition.ColumnIndex == middleValue && slot.GridPosition.RowIndex == maxRepeatedValue);
+
+
+            return boosterAutomatchPos;
         }
     }
 }

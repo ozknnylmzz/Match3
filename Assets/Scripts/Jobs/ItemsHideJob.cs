@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class ItemsHideJob : Job
     {

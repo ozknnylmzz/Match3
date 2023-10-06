@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace CasualA.Board
+namespace Match3
 {
     public static class ItemStateManager
     {

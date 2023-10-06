@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class BoardInitializer : MonoBehaviour
     {
@@ -18,8 +18,8 @@ namespace CasualA.Board
 
         private LevelLoader _levelLoader;
         private StrategyConfig _strategyConfig;
-        private MatchData _matchData;
- 
+        private GameConfig _gameConfig;
+
         public void Awake()
         {
             ConstructObjects();
@@ -30,14 +30,14 @@ namespace CasualA.Board
         private void InitializeGame()
         {
             DOTween.Init().SetCapacity(500, 500);
-
-            _strategyConfig.Initialize(_board,_itemGenerator,_matchData);
+            _gameConfig.Initialize(_itemGenerator);
+            _strategyConfig.Initialize(_board, _itemGenerator);
             _board.Initialize();
-            _levelGenerator.Initialize(_board,_itemGenerator);
-            _match3Game.Initialize(_strategyConfig,_matchData,_board);
+            _levelGenerator.Initialize(_board, _itemGenerator, _gameConfig);
+            _match3Game.Initialize(_strategyConfig, _gameConfig, _board);
             _levelLoader.Initialize(_levelGenerator);
-            _inputController.Initialize(_match3Game,_board,_matchData);
-         
+            _inputController.Initialize(_match3Game, _board);
+
 
             EventManager.Execute(BoardEvents.OnBoardInitialized);
 
@@ -48,11 +48,11 @@ namespace CasualA.Board
         private void ConstructObjects()
         {
             _strategyConfig = new StrategyConfig();
-            _matchData = new MatchData();
+            _gameConfig = new GameConfig();
             _levelLoader = new LevelLoader();
         }
 
-      
+
         private void OnDisable()
         {
             _inputController.UnsubcribeEvents();

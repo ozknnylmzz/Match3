@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class ItemGenerator : MonoBehaviour
     {

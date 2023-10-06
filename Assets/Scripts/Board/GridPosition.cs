@@ -2,7 +2,7 @@ using System;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     [Serializable]
     public struct GridPosition :IEquatable<GridPosition>

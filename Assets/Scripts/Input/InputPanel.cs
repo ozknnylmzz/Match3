@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class InputPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {

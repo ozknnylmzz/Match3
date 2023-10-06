@@ -69,15 +69,5 @@ public class ObjectPool<T> where T: Component
 
     public int ActiveCount => _poolSize - _restingObjects.Count;
 
-    //public void ForEachObjectInPool(Action<T> itemAction)
-    //{
-    //    if (Count == 0) return;
-
-    //    foreach (T poolObject in _allObjects)
-    //    {
-    //        itemAction?.Invoke(poolObject);
-    //    }
-    //}
-
-    //public int Count => _allObjects.Count;
+   
 }

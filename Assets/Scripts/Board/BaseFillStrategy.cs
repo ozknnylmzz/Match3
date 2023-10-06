@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace CasualA.Board
+namespace Match3
 {
     public abstract class BaseFillStrategy 
     {

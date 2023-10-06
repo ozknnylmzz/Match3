@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     [CreateAssetMenu(menuName = "Board/AllItemsData")]
     public class AllItemsData : ScriptableObject

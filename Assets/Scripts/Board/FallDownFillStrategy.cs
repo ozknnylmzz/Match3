@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class FallDownFillStrategy : BaseFillStrategy
     {

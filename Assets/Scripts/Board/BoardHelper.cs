@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace CasualA.Board
+namespace Match3
 {
     public static class BoardHelper
     {

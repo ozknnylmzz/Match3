@@ -1,46 +1,27 @@
 using System.Collections.Generic;
 
-namespace CasualA.Board
+namespace Match3
 {
-    public class MatchDetector
+    public abstract class MatchDetector:IMatchDetector
     {
-        public int MinMatchAmount { get; } = 3;
+        public abstract MatchDetectorType MatchDetectorType { get; }
 
-        private MatchData _matchData;
+        public abstract MatchSequence GetMatchSequence(IBoard board, GridPosition gridPosition);
 
-        public MatchDetector(MatchData matchData)
-        {
-            _matchData = matchData;
-        }
-        protected bool IsMatchAvailable(IBoard board, List<IGridSlot> initialSlot, out IGridSlot currentSlot)
+        protected virtual int MinMatchAmount { get; } = 3;
+
+        protected bool IsMatchAvailable(IBoard board, GridPosition newPosition, IGridSlot initialSlot, out IGridSlot currentSlot)
         {
             currentSlot = null;
 
-            // currentSlot = board[newPosition];
-
-            // return IsSameSlot(initialSlot, currentSlot);
-            return true;
-        }
-        public MatchSequence GetMatchSequence(IBoard board, params GridPosition[] gridPositions)
-        {
-            List<IGridSlot> matchedGridSlots=new List<IGridSlot>();
-            foreach (var gridPosition in gridPositions)
+            if (!board.IsPositionOnItem(newPosition))
             {
-                matchedGridSlots.Add(board[gridPosition]);
+                return false;
             }
 
-            if (matchedGridSlots.Count<3)
-            {
-                return null;
-            }
-        
+            currentSlot = board[newPosition];
 
-            if (IsEnoughMatch(matchedGridSlots))
-            {
-                return new MatchSequence(matchedGridSlots);
-            }
-
-            return null;
+            return IsSameSlot(initialSlot, currentSlot);
         }
 
         protected bool IsEnoughMatch(IReadOnlyList<IGridSlot> matchedGridSlots)
@@ -57,5 +38,6 @@ namespace CasualA.Board
 
             return initialSlot.ItemId == currentSlot.ItemId;
         }
+    
     }
 }

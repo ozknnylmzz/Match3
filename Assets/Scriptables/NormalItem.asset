@@ -15,10 +15,10 @@ MonoBehaviour:
   ItemPoolSize: 250
   ColoredItemDatas:
   - colorType: 0
-    Sprite: {fileID: 21300000, guid: c25b2964672b8344489f4d48e302c6f6, type: 3}
+    Sprite: {fileID: 21300000, guid: 0088e255d64ed294897cf3b15b1ece5f, type: 3}
   - colorType: 5
-    Sprite: {fileID: 21300000, guid: 2b6fc78ee6a9be44aae72240728da6fd, type: 3}
+    Sprite: {fileID: 21300000, guid: bfd06c1e6e1118e468e12afb874eefde, type: 3}
   - colorType: 1
-    Sprite: {fileID: 21300000, guid: d13dd2bf125d014408d13c185f7a2b21, type: 3}
+    Sprite: {fileID: 21300000, guid: dcaf23afa5bdf8549bc89dce5700d843, type: 3}
   - colorType: 2
-    Sprite: {fileID: 21300000, guid: e7b5fc880ecb3f5468ebbc745d1bc86d, type: 3}
+    Sprite: {fileID: 21300000, guid: c91511379ad29804f8d4fc16641dc271, type: 3}

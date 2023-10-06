@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class LevelGenerator : MonoBehaviour
     {
@@ -11,10 +11,11 @@ namespace CasualA.Board
         private MatchDataProvider _matchDataProvider;
         private IBoard _board;
 
-        public void Initialize(IBoard board,ItemGenerator itemGenerator)
+        public void Initialize(IBoard board,ItemGenerator itemGenerator,GameConfig gameConfig)
         {
             _board = board;
             _itemGenerator = itemGenerator;
+            _matchDataProvider = gameConfig.MatchDataProvider;
         }
 
 
@@ -91,9 +92,11 @@ namespace CasualA.Board
 
                 _itemGenerator.SetItemOnSlot(item, slot);
 
+                BoardMatchData boardMatchData = _matchDataProvider.GetMatchData(board, slot.GridPosition);
+               
+                if (!boardMatchData.MatchExists) return item;
                 
-                return item;
-                // if (!boardMatchData.MatchExists) return item;
+                item.Hide();
 
             }
         }

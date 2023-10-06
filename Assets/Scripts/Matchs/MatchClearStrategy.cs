@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class MatchClearStrategy
     {
@@ -15,15 +15,14 @@ namespace CasualA.Board
         public static event Func<IBoard, IEnumerable<IGridSlot>, IEnumerable<IGridSlot>> SideMatchItemRequest;
         private MatchData _matchData;
 
-        public MatchClearStrategy(BoardClearStrategy boardClearStrategy, ItemGenerator itemGenerator,
-            MatchData matchData)
+        public MatchClearStrategy(BoardClearStrategy boardClearStrategy, ItemGenerator itemGenerator
+            )
         {
             _boardClearStrategy = boardClearStrategy;
             _itemGenerator = itemGenerator;
-            _matchData = matchData;
         }
 
-        public void CalculateMatchStrategyJobs(IBoard board, MatchData boardMatchData)
+        public void CalculateMatchStrategyJobs(IBoard board, BoardMatchData boardMatchData)
         {
             CalculateJobDatas(board, boardMatchData);
 
@@ -35,23 +34,26 @@ namespace CasualA.Board
         }
 
 
-        private void CalculateJobDatas(IBoard board, MatchData matchData)
+        private void CalculateJobDatas(IBoard board, BoardMatchData boardMatchData)
         {
             InitializeAllCollections();
-            _allSlots.UnionWith(matchData.GetSendMatchedDataListAsSet());
+            _allSlots.UnionWith(boardMatchData.AllMatchedGridSlots);
+
             ItemSelectionManager.RemoveSelectedSlots(_allSlots);
-            CalculateHideJobs(board, matchData);
+            foreach (MatchData matchData in boardMatchData.MatchedDataList)
+            {
+                IEnumerable<IGridSlot> elementSlots = SideMatchItemRequest?.Invoke(board, matchData.MatchedGridSlots) ?? Enumerable.Empty<IGridSlot>();
+                CalculateHideJobs(board, matchData,elementSlots);
+            }
         }
 
-        private void CalculateHideJobs(IBoard board, MatchData matchData)
+        private void CalculateHideJobs(IBoard board, MatchData matchData, IEnumerable<IGridSlot> elementSlots)
         {
-            HashSet<IGridSlot> allSlots = new HashSet<IGridSlot>();
-            allSlots.UnionWith(matchData.GetSendMatchedDataListAsSet()) ;
-            
-            List<GridItem> allItems = allSlots.Select(slot => slot.Item).ToList();
-            _boardClearStrategy.ClearSlots(board, allSlots,_allSlots,_slotClearDataPerMatchList);
+            HashSet<GridItem> itemsToHide = BoardHelper.GetItemsOfSlots(matchData.MatchedGridSlots);
 
-            JobsExecutor.AddJob(new ItemsHideJob(allItems));
+            _boardClearStrategy.ClearSlots(board, matchData.MatchedGridSlots, elementSlots, _allSlots, _slotClearDataPerMatchList);
+
+            JobsExecutor.AddJob(new ItemsHideJob(itemsToHide));
         }
 
 

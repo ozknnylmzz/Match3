@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace CasualA.Board
+namespace Match3
 {
     public class BoardClearStrategy
     {
@@ -13,18 +13,11 @@ namespace CasualA.Board
             _fillStrategy = fillStrategy;
         }
 
-        public void ClearSlots(IBoard board, IEnumerable<IGridSlot> slotsToDestroy)
+       
+        public void ClearSlots(IBoard board, IEnumerable<IGridSlot> matchSlots, IEnumerable<IGridSlot> elementSlots, HashSet<IGridSlot> allSlots, ICollection<SlotClearDataPerMatch> slotClearDataPerMatchList)
         {
-            // Debug.Log("slotsToClear"+slotsToClear.Count());
-            IEnumerable<IGridSlot> slotsToClear = GetChainSlots(board, slotsToDestroy);
-            IEnumerable<GridItem> itemsToClear = BoardHelper.GetItemsOfSlots(slotsToClear);
-            
-            ClearAllSlots(slotsToClear);
-            Refill(slotsToClear, itemsToClear);
-        }
-        public void ClearSlots(IBoard board, IEnumerable<IGridSlot> matchSlots, HashSet<IGridSlot> allSlots, ICollection<SlotClearDataPerMatch> slotClearDataPerMatchList)
-        {
-            IEnumerable<IGridSlot> chainSlots = GetChainSlots(board, matchSlots);
+            IEnumerable<IGridSlot> slotsToClear = matchSlots.Union(elementSlots);
+            IEnumerable<IGridSlot> chainSlots = GetChainSlots(board, slotsToClear);
             IEnumerable<GridItem> itemsToClear = BoardHelper.GetItemsOfSlots(chainSlots);
 
             slotClearDataPerMatchList.Add(new SlotClearDataPerMatch(matchSlots, itemsToClear));
@@ -33,15 +26,12 @@ namespace CasualA.Board
             
             
         }
-    
-
 
         public void Refill(IEnumerable<IGridSlot> allSlots, IEnumerable<GridItem> allItems)
         {
-            if (allItems.Count()>0)
-            {
+            
                 _fillStrategy.AddFillJobs(allSlots, allItems);
-            }
+            
           
         }
 

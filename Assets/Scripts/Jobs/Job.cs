@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 
-namespace CasualA.Board
+namespace Match3
 {
     public abstract class Job
     {
