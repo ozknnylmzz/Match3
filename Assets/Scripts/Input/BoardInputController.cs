@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Match3
@@ -10,9 +9,6 @@ namespace Match3
         private GridPosition _selectedGridPosition;
         private GridPosition _targetGridPosition;
         private bool _isDragMode;
-
-        public GridPosition SelectedGridPosition => _selectedGridPosition;
-        public GridPosition TargetGridPosition => _targetGridPosition;
 
         public void Initialize(Match3Game match3Game)
         {

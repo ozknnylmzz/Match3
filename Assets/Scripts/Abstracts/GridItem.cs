@@ -12,8 +12,6 @@ namespace Match3
 
         public abstract void ConfigureItem(int configureType);
 
-        public abstract void ChangeColor(Color color);
-
         public ColorType ColorType { get; private set; } = ColorType.None;
 
         public bool IsMatchable => ColorType != ColorType.None;
@@ -24,12 +22,9 @@ namespace Match3
 
         public IGridSlot ItemSlot { get; private set; }
 
-        public abstract bool CanBeKilled { get; }
-
         public int CurrentScore { get; private set; }
 
         public IGridSlot DestinationSlot { get; private set; }
-
         
         public int ItemStateDelay { get; private set; } = 0;
         
@@ -56,8 +51,6 @@ namespace Match3
         {
             _generator = generator;
         }
-
-    
 
         public void SetScore(int score)
         {

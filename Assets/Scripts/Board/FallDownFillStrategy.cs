@@ -15,7 +15,6 @@ namespace Match3
         {
              IEnumerable<int> fallSlotsColumnIndexes = allSlots.Select(slot => slot.GridPosition.ColumnIndex);
             List<ItemFallData> allItemsFallData = new();
-            // IEnumerable<int> fallSlotsColumnIndexes = allSlots.ToList().Select(slot => slot.GridPosition.ColumnIndex);
             ResetDropSlots();
 
             foreach (int columnIndex in fallSlotsColumnIndexes)

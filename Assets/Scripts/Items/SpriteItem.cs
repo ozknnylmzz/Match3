@@ -24,10 +24,6 @@ namespace Match3
             ResetLayer();
         }
 
-        public override void ChangeColor(Color color)
-        {
-            _spriteRenderer.color = color;
-        }
 
 
         private void ResetLayer()

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace Match3
 {
@@ -13,8 +12,8 @@ namespace Match3
             _fillStrategy = fillStrategy;
         }
 
-       
-        public void ClearSlots(IBoard board, IEnumerable<IGridSlot> matchSlots, IEnumerable<IGridSlot> elementSlots, HashSet<IGridSlot> allSlots, ICollection<SlotClearDataPerMatch> slotClearDataPerMatchList)
+        public void ClearSlots(IBoard board, IEnumerable<IGridSlot> matchSlots, IEnumerable<IGridSlot> elementSlots,
+            HashSet<IGridSlot> allSlots, ICollection<SlotClearDataPerMatch> slotClearDataPerMatchList)
         {
             IEnumerable<IGridSlot> slotsToClear = matchSlots.Union(elementSlots);
             IEnumerable<IGridSlot> chainSlots = GetChainSlots(board, slotsToClear);
@@ -23,22 +22,17 @@ namespace Match3
             slotClearDataPerMatchList.Add(new SlotClearDataPerMatch(matchSlots, itemsToClear));
 
             allSlots.UnionWith(chainSlots);
-            
-            
         }
 
         public void Refill(IEnumerable<IGridSlot> allSlots, IEnumerable<GridItem> allItems)
         {
-            
-                _fillStrategy.AddFillJobs(allSlots, allItems);
-            
-          
+            _fillStrategy.AddFillJobs(allSlots, allItems);
         }
 
         private HashSet<IGridSlot> GetChainSlots(IBoard board, IEnumerable<IGridSlot> initialSlots)
         {
             HashSet<IGridSlot> slotsToClear = new HashSet<IGridSlot>(initialSlots);
-            HashSet<IGridSlot> chainedSlots =new HashSet<IGridSlot>(initialSlots);
+            HashSet<IGridSlot> chainedSlots = new HashSet<IGridSlot>(initialSlots);
 
             while (true)
             {
@@ -52,8 +46,6 @@ namespace Match3
                     }
 
                     currentSlot.SetFound(true);
-
-                 
                 }
 
                 if (slotsToDestroy.Count == 0)
@@ -63,11 +55,11 @@ namespace Match3
                     {
                         break;
                     }
+
                     slotsToClear.Clear();
                     slotsToClear.Clear();
                     slotsToClear.UnionWith(selectionSlots);
                     chainedSlots.UnionWith(selectionSlots);
-                 
                 }
                 else
                 {

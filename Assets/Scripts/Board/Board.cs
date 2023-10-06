@@ -33,15 +33,8 @@ namespace Match3
             GenerateGrid();
         }
 
-        public void SetColumnAndRow()
-        {
-            // _columnCount = (int)SrDataMidLayer.BoardSize;
-            // _rowCount = (int)SrDataMidLayer.BoardSize;
-        }
-
         private void GenerateGrid()
         {
-            SetColumnAndRow();
 
             _gridSlots = new IGridSlot[_rowCount, _columnCount];
             _allGridPositions = new GridPosition[_rowCount * _columnCount];

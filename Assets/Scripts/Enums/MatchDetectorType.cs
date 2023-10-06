@@ -4,7 +4,5 @@ namespace Match3
     {
         Horizontal,
         Vertical,
-        Diagonal,
-        Square
     } 
 }

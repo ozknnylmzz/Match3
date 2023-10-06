@@ -8,7 +8,6 @@ namespace Match3
 
         public override ItemType ItemType => ItemType.BoardItem;
         public override int DefaultScore => 0;
-        public override bool CanBeKilled => true;
 
         public override void ConfigureItem(int configureType)
         {

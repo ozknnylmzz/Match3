@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Match3
@@ -51,15 +50,10 @@ namespace Match3
             IsFound = isFound;
         }
 
-      
         public void SetItemDrop(bool value)
         {
             IsItemDroppedTo = value;
         }
-
-   
-
-       
 
         public override string ToString()
         {
