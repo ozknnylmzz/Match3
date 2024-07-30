@@ -1,6 +1,8 @@
+using Match3.Enums;
+using Match3.Items;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Data
 {
     public class NormalItem : SpriteItem
     {
@@ -37,9 +39,5 @@ namespace Match3
             SetSprite(itemContentData.Sprite);
         }
 
-
-
-      
-      
     } 
 }

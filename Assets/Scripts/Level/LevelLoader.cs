@@ -1,5 +1,7 @@
 
-namespace Match3
+using Match3.Enums;
+
+namespace Match3.Level
 {
     public class LevelLoader
     {

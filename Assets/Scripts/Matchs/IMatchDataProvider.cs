@@ -1,4 +1,6 @@
-namespace Match3
+using Match3.Boards;
+
+namespace Match3.Matchs
 {
     public interface IMatchDataProvider
     {

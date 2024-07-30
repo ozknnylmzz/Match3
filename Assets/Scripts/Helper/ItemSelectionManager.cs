@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Match3.Boards;
+using Match3.Items;
 
 namespace Match3
 {
@@ -39,7 +41,6 @@ namespace Match3
             _selectableSlots.ExceptWith(slots);
             _selectedSlots.UnionWith(slots);
         }
-
 
         public static void Reset(IBoard board)
         {

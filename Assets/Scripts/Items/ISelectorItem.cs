@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Match3.Boards;
 
-namespace Match3
+namespace Match3.Items
 {
     public interface ISelectorItem 
     {

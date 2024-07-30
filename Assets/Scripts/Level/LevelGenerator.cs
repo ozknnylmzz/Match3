@@ -1,7 +1,12 @@
 using System.Collections.Generic;
+using Match3.Boards;
+using Match3.Data;
+using Match3.Enums;
+using Match3.Game;
+using Match3.Items;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Level
 {
     public class LevelGenerator : MonoBehaviour
     {

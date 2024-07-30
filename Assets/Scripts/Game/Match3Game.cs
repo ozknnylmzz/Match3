@@ -1,14 +1,19 @@
 using Cysharp.Threading.Tasks;
+using Match3.Boards;
+using Match3.Enums;
+using Match3.Items;
+using Match3.Matchs;
+using Match3.Jobs;
+
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Game
 {
     public class Match3Game : MonoBehaviour
     {
         private bool _isSwapAllowed = true;
         private IMatchDataProvider _matchDataProvider;
         private IBoard _board;
-        private MatchData _matchData;
         private MatchClearStrategy _matchClearStrategy;
         private JobsExecutor _jobsExecutor;
 

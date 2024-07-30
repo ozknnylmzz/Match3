@@ -1,5 +1,7 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Match3.Enums;
+using Match3.Items;
 using System.Collections.Generic;
 using UnityEngine;
 

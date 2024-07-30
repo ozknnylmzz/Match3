@@ -1,11 +1,10 @@
+using Match3.Matchs;
 
-
-namespace Match3
+namespace Match3.Game
 {
     public class GameConfig
     {
         public MatchDataProvider MatchDataProvider { get; private set; }
-        
         
         public void Initialize()
         {

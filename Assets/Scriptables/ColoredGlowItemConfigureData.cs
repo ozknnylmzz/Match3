@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Data
 {
     [CreateAssetMenu(menuName = "Board/ConfigureData/ColoredGlowItemConfigureData")]
     public class ColoredGlowItemConfigureData : ConfigureData

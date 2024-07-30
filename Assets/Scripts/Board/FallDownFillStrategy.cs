@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using Match3.Enums;
+using Match3.Items;
+using Match3.Jobs;
 
-namespace Match3
+namespace Match3.Boards
 {
     public class FallDownFillStrategy : BaseFillStrategy
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Items
 {
     public abstract class SpriteItem : GridItem
     {
@@ -23,8 +23,6 @@ namespace Match3
             base.ResetItem();
             ResetLayer();
         }
-
-
 
         private void ResetLayer()
         {

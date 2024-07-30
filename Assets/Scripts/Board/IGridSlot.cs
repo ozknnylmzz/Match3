@@ -1,6 +1,7 @@
+using Match3.Items;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Boards
 {
     public interface IGridSlot
     {

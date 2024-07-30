@@ -1,7 +1,12 @@
 using DG.Tweening;
+using Match3.Enums;
+using Match3.Game;
+using Match3.Input;
+using Match3.Items;
+using Match3.Level;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Boards
 {
     public class BoardInitializer : MonoBehaviour
     {

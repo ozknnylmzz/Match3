@@ -1,6 +1,9 @@
+using System;
+using Match3.Enums;
+using Match3.Items;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Data
 {
     [CreateAssetMenu(menuName = "Board/AllItemsData")]
     public class AllItemsData : ScriptableObject
@@ -23,7 +26,7 @@ namespace Match3
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class ItemData
     {
         public GridItem ItemPrefab;

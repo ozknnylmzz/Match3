@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Match3.Boards;
+using Match3.Matchs;
 
-
-namespace Match3
+namespace Match3.Game
 {
     public class MatchDataProvider :IMatchDataProvider
     {
@@ -11,7 +12,6 @@ namespace Match3
         {
             _matchDetectors = matchDetectors;
         }
-
 
         public BoardMatchData GetMatchData(IBoard board, params GridPosition[] gridPositions)
         {
@@ -72,6 +72,7 @@ namespace Match3
 
             return matchSequences;
         }
+
         private bool IsSharedMatchData(MatchData currentMatchData, List<MatchData> matchDataList,
             out List<MatchData> sharedMatchData)
         {

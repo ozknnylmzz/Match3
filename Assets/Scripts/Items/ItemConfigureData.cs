@@ -1,4 +1,6 @@
-﻿namespace Match3
+﻿using Match3.Enums;
+
+namespace Match3.Items
 {
     [System.Serializable]
     public struct ItemConfigureData

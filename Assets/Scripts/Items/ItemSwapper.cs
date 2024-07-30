@@ -1,8 +1,11 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Match3.Boards;
+using Match3.Enums;
+using Match3.Game;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Items
 {
     public class ItemSwapper
     {
@@ -25,8 +28,7 @@ namespace Match3
                 EventManager.Execute(BoardEvents.OnBeforeJobsStart);
             }
 
-            await UniTask.Delay(200);
-             DOTween.Sequence()
+           await  DOTween.Sequence()
                      .Join(selectedItem.transform.DOMove(targetPosition, SwapDuration))
                      .Join(targetItem.transform.DOMove(selectedPosition, SwapDuration))
                      .SetEase(Ease.Linear);

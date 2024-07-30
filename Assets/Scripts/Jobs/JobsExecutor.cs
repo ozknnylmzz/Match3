@@ -1,8 +1,9 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System;
+using Match3.Items;
 
-namespace Match3
+namespace Match3.Jobs
 {
     public class JobsExecutor : IDisposable
     {
@@ -63,8 +64,6 @@ namespace Match3
                 }
             }
         }
-
-       
 
         private void ClearJobs()
         {

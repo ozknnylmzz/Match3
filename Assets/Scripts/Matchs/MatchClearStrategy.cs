@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Match3.Boards;
+using Match3.Items;
+using Match3.Jobs;
 
-namespace Match3
+namespace Match3.Matchs
 {
     public class MatchClearStrategy
     {

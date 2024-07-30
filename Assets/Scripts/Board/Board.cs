@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Boards
 {
     public class Board : MonoBehaviour, IBoard
     {
@@ -10,9 +10,7 @@ namespace Match3
 
         [SerializeField] private int _rowCount;
         [SerializeField] private int _columnCount;
-
         [SerializeField] private float _cellSpacing = 0.05f;
-
         [SerializeField] private GridSlot _grid;
 
         private Vector3 _originPos;
@@ -113,8 +111,6 @@ namespace Match3
 
             return new Vector3(originX, originY);
         }
-
-      
 
         public IEnumerator<IGridSlot> GetEnumerator()
         {

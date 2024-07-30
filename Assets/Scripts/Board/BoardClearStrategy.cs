@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using Match3.Items;
 
-namespace Match3
+namespace Match3.Boards
 {
     public class BoardClearStrategy
     {

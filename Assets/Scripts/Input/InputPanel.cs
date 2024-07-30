@@ -1,7 +1,8 @@
+using Match3.Enums;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Match3
+namespace Match3.Input
 {
     public class InputPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Boards
 {
     public interface IBoard : IEnumerable<IGridSlot>
     {

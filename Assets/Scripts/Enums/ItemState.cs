@@ -1,4 +1,4 @@
-namespace Match3
+namespace Match3.Enums
 {
     public enum ItemState
     {

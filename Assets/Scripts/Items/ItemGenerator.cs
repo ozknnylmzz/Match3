@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Match3.Boards;
+using Match3.Enums;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Items
 {
     public class ItemGenerator : MonoBehaviour
     {

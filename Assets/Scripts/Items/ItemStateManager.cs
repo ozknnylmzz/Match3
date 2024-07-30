@@ -1,7 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
+using Match3.Enums;
 using System.Collections.Generic;
 
-namespace Match3
+namespace Match3.Items
 {
     public static class ItemStateManager
     {

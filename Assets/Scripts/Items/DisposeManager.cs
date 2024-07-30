@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Match3.Enums;
 
-namespace Match3
+namespace Match3.Items
 {
     public static class DisposeManager
     {

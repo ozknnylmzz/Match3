@@ -1,4 +1,6 @@
-namespace Match3
+using Match3.Boards;
+
+namespace Match3.Items
 {
     public class ItemFallData
     {
@@ -13,7 +15,5 @@ namespace Match3
             PathDistance = pathDistance;
             item.SetPathDistance(pathDistance);
         }
-
-       
     } 
 }

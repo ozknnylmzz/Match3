@@ -1,13 +1,16 @@
+using Match3.Boards;
+using Match3.Enums;
+using Match3.Game;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Input
 {
     public class BoardInputController : MonoBehaviour
     {
         private Match3Game _match3Game;
 
         private GridPosition _selectedGridPosition;
-        private GridPosition _targetGridPosition;
+
         private bool _isDragMode;
 
         public void Initialize(Match3Game match3Game)
