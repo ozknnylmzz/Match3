@@ -2,7 +2,7 @@ using Match3.Boards;
 using Match3.Items;
 using Match3.Matchs;
 
-namespace Match3
+namespace Match3.Strategy
 {
     public class StrategyConfig
     {

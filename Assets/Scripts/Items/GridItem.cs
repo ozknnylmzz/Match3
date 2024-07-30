@@ -27,9 +27,9 @@ namespace Match3.Items
         public int CurrentScore { get; private set; }
 
         public IGridSlot DestinationSlot { get; private set; }
-        
+
         public int ItemStateDelay { get; private set; } = 0;
-        
+
         public int PathDistance { get; private set; } = 0;
 
         private ItemGenerator _generator;
@@ -120,14 +120,14 @@ namespace Match3.Items
 
         public override string ToString()
         {
-            return  ColorType + " " + ItemType + " on: " + ItemSlot.GridPosition.ToString();
+            return ColorType + " " + ItemType + " on: " + ItemSlot.GridPosition.ToString();
         }
 
         public void SetPathDistance(int pathDistance)
         {
             PathDistance = pathDistance;
         }
-        
+
         public void ResetPathDistance()
         {
             PathDistance = 0;

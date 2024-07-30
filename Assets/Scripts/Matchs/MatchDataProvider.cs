@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using Match3.Boards;
-using Match3.Matchs;
 
-namespace Match3.Game
+namespace Match3.Matchs
 {
     public class MatchDataProvider :IMatchDataProvider
     {

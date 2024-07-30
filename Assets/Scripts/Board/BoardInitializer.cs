@@ -4,6 +4,7 @@ using Match3.Game;
 using Match3.Input;
 using Match3.Items;
 using Match3.Level;
+using Match3.Strategy;
 using UnityEngine;
 
 namespace Match3.Boards
@@ -13,7 +14,7 @@ namespace Match3.Boards
         [SerializeField] private Board _board;
 
         [SerializeField] private LevelGenerator _levelGenerator;
-        [SerializeField] private ItemGenerator _itemGenerator;
+        [SerializeField] private ItemGenerator _itemGenerator; 
 
         [SerializeField] private Match3Game _match3Game;
         [SerializeField] private BoardInputController _inputController;

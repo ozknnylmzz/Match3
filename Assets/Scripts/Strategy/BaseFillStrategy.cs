@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Match3.Boards;
 using Match3.Items;
 
-namespace Match3.Boards
+namespace Match3.Strategy
 {
     public abstract class BaseFillStrategy 
     {

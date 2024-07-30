@@ -5,7 +5,7 @@ using Match3.Items;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Jobs
 {
     public class ItemsFallJob : Job
     {
@@ -37,7 +37,7 @@ namespace Match3
                     .PrependInterval(IntervalDuration);
             }
 
-            // await sequence;
+            await sequence;
 
             JobCompleted = true;
 

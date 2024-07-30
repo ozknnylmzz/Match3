@@ -6,6 +6,7 @@ using Match3.Matchs;
 using Match3.Jobs;
 
 using UnityEngine;
+using Match3.Strategy;
 
 namespace Match3.Game
 {

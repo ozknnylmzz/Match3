@@ -25,7 +25,6 @@ namespace Match3.Boards
 
         public GridItem Item { get; }
 
-
         public void SetItem(GridItem item);
 
         public void ClearSlot();
@@ -33,7 +32,6 @@ namespace Match3.Boards
         public void SetFound(bool isFound);
 
         public void SetItemDrop(bool value);
-
      
     }
 }

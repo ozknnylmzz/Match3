@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Match3
+namespace Match3.Boards
 {
     [Serializable]
     public struct GridPosition :IEquatable<GridPosition>

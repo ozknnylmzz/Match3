@@ -9,7 +9,6 @@ namespace Match3.Matchs
         public IReadOnlyList<IGridSlot> MatchedGridSlots { get; }
         public MatchDetectorType MatchDetectorType { get; }
 
-
         public MatchSequence(IReadOnlyList<IGridSlot> matchedGridSlots,MatchDetectorType matchDetectorType)
         {
             MatchedGridSlots = matchedGridSlots;

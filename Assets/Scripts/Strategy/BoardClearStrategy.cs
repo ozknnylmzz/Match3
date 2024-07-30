@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Match3.Boards;
 using Match3.Items;
 
-namespace Match3.Boards
+namespace Match3.Strategy
 {
     public class BoardClearStrategy
     {
@@ -52,6 +53,7 @@ namespace Match3.Boards
                 if (slotsToDestroy.Count == 0)
                 {
                     var selectionSlots = ItemSelectionManager.ExecuteSelectionRequests(board, chainedSlots);
+                    
                     if (selectionSlots.Count() == 0)
                     {
                         break;
@@ -61,6 +63,7 @@ namespace Match3.Boards
                     slotsToClear.Clear();
                     slotsToClear.UnionWith(selectionSlots);
                     chainedSlots.UnionWith(selectionSlots);
+                  
                 }
                 else
                 {

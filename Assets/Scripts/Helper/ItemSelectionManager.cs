@@ -2,24 +2,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Match3.Boards;
 using Match3.Items;
-
+using UnityEngine;
 namespace Match3
 {
     public static class ItemSelectionManager
     {
         private static readonly List<ISelectorItem> _selectorItems = new();
-
         private static readonly HashSet<IGridSlot> _selectableSlots = new();
         private static readonly HashSet<IGridSlot> _selectedSlots = new();
 
-
         public static IEnumerable<IGridSlot> ExecuteSelectionRequests(IBoard board, IEnumerable<IGridSlot> unselectableSlots)
         {
+            
             if (_selectorItems.Count == 0)
             {
                 return Enumerable.Empty<IGridSlot>();
             }
-            
             _selectorItems.Sort((x, y) => x.SelectionPriority.CompareTo(y.SelectionPriority));
 
             RemoveSelectedSlots(unselectableSlots);

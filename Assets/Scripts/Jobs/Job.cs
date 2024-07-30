@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Match3.Enums;
 
 namespace Match3
 {

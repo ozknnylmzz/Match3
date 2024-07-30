@@ -34,8 +34,7 @@ namespace Match3
                             .SetEase(Ease.InOutSine));
             }
 
-            // await sequence;
-            // await UniTask.Delay(200);
+           
             foreach (GridItem item in _items)
             {
                 item.Kill(isSpecialKill: false);

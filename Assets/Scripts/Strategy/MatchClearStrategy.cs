@@ -4,8 +4,9 @@ using System.Linq;
 using Match3.Boards;
 using Match3.Items;
 using Match3.Jobs;
+using Match3.Matchs;
 
-namespace Match3.Matchs
+namespace Match3.Strategy
 {
     public class MatchClearStrategy
     {
@@ -15,7 +16,6 @@ namespace Match3.Matchs
         private HashSet<IGridSlot> _allSlots;
         private HashSet<GridItem> _allItems;
         public static event Func<IBoard, IEnumerable<IGridSlot>, IEnumerable<IGridSlot>> SideMatchItemRequest;
-        private MatchData _matchData;
 
         public MatchClearStrategy(BoardClearStrategy boardClearStrategy)
         {
@@ -39,10 +39,10 @@ namespace Match3.Matchs
             InitializeAllCollections();
             _allSlots.UnionWith(boardMatchData.AllMatchedGridSlots);
 
-            ItemSelectionManager.RemoveSelectedSlots(_allSlots);
             foreach (MatchData matchData in boardMatchData.MatchedDataList)
             {
                 IEnumerable<IGridSlot> elementSlots = SideMatchItemRequest?.Invoke(board, matchData.MatchedGridSlots) ?? Enumerable.Empty<IGridSlot>();
+
                 CalculateHideJobs(board, matchData,elementSlots);
             }
         }

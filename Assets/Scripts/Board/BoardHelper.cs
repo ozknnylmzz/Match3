@@ -12,12 +12,10 @@ namespace Match3.Boards
             _itemColorCounts = new();
         }
 
-     
         public static HashSet<IGridSlot> GetSideSlots(IGridSlot powerUpSlot, IBoard board, int distance = 1)
         {
             return GetDirectionalSlots(powerUpSlot, board, GridPosition.SideDirections, distance);
         }
-
 
         public static HashSet<IGridSlot> GetNeighbourSlots(GridPosition powerUpPosition, IBoard board, int distance = 1)
         {

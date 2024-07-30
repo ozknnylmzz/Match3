@@ -21,7 +21,6 @@ namespace Match3.Matchs
             set => MatchedGridSlots = value;
         }
 
-
         private int _matchItemId
         {
             set => MatchItemId = value;
@@ -34,14 +33,12 @@ namespace Match3.Matchs
             SetMatchDatas(matchedSequences, matchItemId);
         }
 
-
         public void SetMatchDatas(HashSet<MatchSequence> matchedSequences, int matchItemId)
         {
             _matchedSequences = matchedSequences;
             _matchItemId = matchItemId;
             _matchedGridSlots = GetMatchedGridSlots();
         }
-
 
         private HashSet<IGridSlot> GetMatchedGridSlots()
         {
@@ -51,7 +48,6 @@ namespace Match3.Matchs
             {
                 matchedGridSlots.UnionWith(sequence.MatchedGridSlots);
             }
-
 
             return matchedGridSlots;
         }

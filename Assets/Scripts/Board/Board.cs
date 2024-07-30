@@ -33,7 +33,6 @@ namespace Match3.Boards
 
         private void GenerateGrid()
         {
-
             _gridSlots = new IGridSlot[_rowCount, _columnCount];
             _allGridPositions = new GridPosition[_rowCount * _columnCount];
 

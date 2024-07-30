@@ -4,6 +4,7 @@ using Match3.Data;
 using Match3.Enums;
 using Match3.Game;
 using Match3.Items;
+using Match3.Matchs;
 using UnityEngine;
 
 namespace Match3.Level
@@ -16,13 +17,12 @@ namespace Match3.Level
         private MatchDataProvider _matchDataProvider;
         private IBoard _board;
 
-        public void Initialize(IBoard board,ItemGenerator itemGenerator,GameConfig gameConfig)
+        public void Initialize(IBoard board, ItemGenerator itemGenerator, GameConfig gameConfig)
         {
             _board = board;
             _itemGenerator = itemGenerator;
             _matchDataProvider = gameConfig.MatchDataProvider;
         }
-
 
         public void SetConfigureTypes(int[] possibleConfigureTypes)
         {
@@ -58,13 +58,12 @@ namespace Match3.Level
 
             return initialBoardData;
         }
+
         public void GenerateItemsPool(ItemType itemType)
         {
-           
-                ItemData itemData = _allItemsData.GetItemDataOfType(itemType);
-                _itemGenerator.GeneratePool(itemData.ItemPrefab, itemData.ConfigureData.ItemPoolSize);
+            ItemData itemData = _allItemsData.GetItemDataOfType(itemType);
+            _itemGenerator.GeneratePool(itemData.ItemPrefab, itemData.ConfigureData.ItemPoolSize);
         }
-
 
         private GridItem SetItemWithoutMatch(IBoard board, IGridSlot slot)
         {
@@ -75,9 +74,9 @@ namespace Match3.Level
                 _itemGenerator.SetItemOnSlot(item, slot);
 
                 BoardMatchData boardMatchData = _matchDataProvider.GetMatchData(board, slot.GridPosition);
-               
+
                 if (!boardMatchData.MatchExists) return item;
-                
+
                 item.Hide();
 
             }
