@@ -113,7 +113,6 @@ namespace Match3.Boards
                 yield return slot;
             }
         }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

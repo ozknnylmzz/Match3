@@ -4,7 +4,6 @@ using Match3.Boards;
 using Match3.Enums;
 using Match3.Items;
 using Match3.Jobs;
-using UnityEngine;
 
 namespace Match3.Strategy
 {
@@ -21,6 +20,7 @@ namespace Match3.Strategy
         {
             IEnumerable<int> fallSlotsColumnIndexes = allSlots.Select(slot => slot.GridPosition.ColumnIndex);
             List<ItemFallData> allItemsFallData = new();
+            
             ResetDropSlots();
 
             foreach (int columnIndex in fallSlotsColumnIndexes)
@@ -57,7 +57,7 @@ namespace Match3.Strategy
             {
                 IGridSlot currentSlot = board[rowIndex, columnIndex];
 
-                if (!currentSlot.IsMovable)
+                if (!currentSlot.HasItem)
                 {
                     continue;
                 }

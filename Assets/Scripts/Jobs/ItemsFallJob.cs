@@ -25,7 +25,6 @@ namespace Match3.Jobs
 
         public override async UniTask ExecuteAsync()
         {
-            Debug.Log("_hideItemsOnColumn"+_hideItemsOnColumn.Count());
             await UniTask.WhenAll(_hideItemsOnColumn.Select(item => UniTask.WaitUntil(() => item.ItemState == ItemState.Hide )));
 
             Sequence sequence = DOTween.Sequence();

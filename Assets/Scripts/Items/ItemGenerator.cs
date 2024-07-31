@@ -21,7 +21,7 @@ namespace Match3.Items
             _possibleConfigureTypes = possibleConfigureTypes;
         }
 
-        public GridItem GetItemWithId(ItemType itemType, int configureType = 0)
+        private GridItem GetItemWithId(ItemType itemType, int configureType = 0)
         {
             GridItem item = _itemPools[itemType].GetFromPool();
 
@@ -46,7 +46,6 @@ namespace Match3.Items
             slot.SetItem(item);
         }
 
-
         private void ConfigureItem(GridItem item, int configureType)
         {
             item.ConfigureItem(configureType);
@@ -58,7 +57,5 @@ namespace Match3.Items
             item.SetGenerator(this);
             item.Initialize();
         }
-
-       
     }
 }

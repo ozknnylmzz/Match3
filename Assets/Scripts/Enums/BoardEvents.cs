@@ -5,15 +5,11 @@ namespace Match3.Enums
         OnPointerDown,
         OnPointerUp,
         OnPointerDrag,
-        OnSwapSuccess,
         OnBeforeJobsStart,
         OnAfterJobsCompleted,
-        OnSequenceDataCalculated,
-        
        
         OnBoardInitialized,
         OnBoardDestroyed,
-        OnSwapDetected,
     }
 
 }

@@ -92,11 +92,6 @@ namespace Match3.Items
             ItemStateDelay = value;
         }
 
-        public override string ToString()
-        {
-            return ColorType + " " + ItemType + " on: " + ItemSlot.GridPosition.ToString();
-        }
-
         public void SetPathDistance(int pathDistance)
         {
             PathDistance = pathDistance;

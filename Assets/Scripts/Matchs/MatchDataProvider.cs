@@ -32,7 +32,6 @@ namespace Match3.Matchs
             {
                 MatchData matchData = new MatchData(matchSequences);
 
-
                 if (IsSharedMatchData(matchData, matchedDataAllSlots.MatchDataList,
                         out List<MatchData> sharedMatchDatas))
                 {

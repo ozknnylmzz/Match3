@@ -11,14 +11,13 @@ namespace Match3.Game
 {
     public class Match3Game : MonoBehaviour
     {
-        private bool _isSwapAllowed = true;
         private IMatchDataProvider _matchDataProvider;
         private IBoard _board;
         private MatchClearStrategy _matchClearStrategy;
         private JobsExecutor _jobsExecutor;
-
         private ItemSwapper _itemSwapper;
         public bool IsSwapAllowed => _isSwapAllowed;
+        private bool _isSwapAllowed = true;
 
         public void Initialize(StrategyConfig strategyConfig, GameConfig gameConfig, IBoard board)
         {
@@ -53,10 +52,7 @@ namespace Match3.Game
 
             if (IsMatchDetected(out BoardMatchData boardMatchData, selectedSlot.GridPosition, targetSlot.GridPosition))
             {
-                EventManager.Execute(BoardEvents.OnSwapSuccess);
-
-                ItemSelectionManager.Reset(_board);
-                _matchClearStrategy.CalculateMatchStrategyJobs(_board, boardMatchData);
+                _matchClearStrategy.CalculateMatchStrategyJobs(boardMatchData);
 
                 CheckAutoMatch();
                 StartJobs();
@@ -66,7 +62,6 @@ namespace Match3.Game
                 SwapItemsBack(selectedSlot, targetSlot);
             }
         }
-      
 
         private async void StartJobs()
         {
@@ -79,14 +74,9 @@ namespace Match3.Game
 
         private void CheckAutoMatch()
         {
-            EventManager.Execute(BoardEvents.OnSequenceDataCalculated);
-
             while (IsMatchDetected(out BoardMatchData boardMatchData, _board.AllGridPositions) )
             {
-                ItemSelectionManager.Reset(_board);
-
-                _matchClearStrategy.CalculateMatchStrategyJobs(_board, boardMatchData);
-                EventManager.Execute(BoardEvents.OnSequenceDataCalculated);
+                _matchClearStrategy.CalculateMatchStrategyJobs(boardMatchData);
             }
         }
         

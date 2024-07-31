@@ -11,11 +11,7 @@ namespace Match3.Boards
                 
         public bool HasItem { get; }
 
-        public bool IsMovable { get; }
-        
         public bool CanContainItem { get; }
-
-        public bool IsFound { get; }
 
         public GridPosition GridPosition { get; }
 
@@ -26,8 +22,6 @@ namespace Match3.Boards
         public void SetItem(GridItem item);
 
         public void ClearSlot();
-
-        public void SetFound(bool isFound);
 
         public void SetItemDrop(bool value);
      

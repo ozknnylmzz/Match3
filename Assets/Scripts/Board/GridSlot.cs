@@ -13,10 +13,6 @@ namespace Match3.Boards
 
         public bool CanContainItem => true;
 
-        public bool IsFound { get; private set; } = false;
-
-        public bool IsMovable => HasItem;
-
         public bool IsItemDroppedTo { get; private set; }
 
         public GridItem Item { get; private set; }
@@ -40,22 +36,11 @@ namespace Match3.Boards
         public void ClearSlot()
         {
             Item = default;
-            SetFound(false);
         }
-
-        public void SetFound(bool isFound)
-        {
-            IsFound = isFound;
-        }
-
+        
         public void SetItemDrop(bool value)
         {
             IsItemDroppedTo = value;
-        }
-
-        public override string ToString()
-        {
-            return GridPosition.ToString();
         }
     } 
 }

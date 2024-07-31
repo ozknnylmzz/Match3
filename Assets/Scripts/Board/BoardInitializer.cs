@@ -39,8 +39,6 @@ namespace Match3.Boards
             _inputController.Initialize(_match3Game);
 
             EventManager.Execute(BoardEvents.OnBoardInitialized);
-
-            ItemSelectionManager.Reset(_board);
         }
 
         private void ConstructObjects()

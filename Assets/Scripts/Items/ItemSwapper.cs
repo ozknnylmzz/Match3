@@ -9,7 +9,7 @@ namespace Match3.Items
 {
     public class ItemSwapper
     {
-        public const float SwapDuration = 0.13f;
+        private const float SwapDuration = 0.13f;
 
         public async UniTask SwapItems(IGridSlot selectedSlot, IGridSlot targetSlot, Match3Game match3Game)
         {
@@ -28,23 +28,11 @@ namespace Match3.Items
                 EventManager.Execute(BoardEvents.OnBeforeJobsStart);
             }
 
-           await  DOTween.Sequence()
-                     .Join(selectedItem.transform.DOMove(targetPosition, SwapDuration))
-                     .Join(targetItem.transform.DOMove(selectedPosition, SwapDuration))
-                     .SetEase(Ease.Linear);
+            await  DOTween.Sequence()
+                .Join(selectedItem.transform.DOMove(targetPosition, SwapDuration))
+                .Join(targetItem.transform.DOMove(selectedPosition, SwapDuration))
+                .SetEase(Ease.Linear);
         }
 
-      
-
-        public void SwapItemsData(IGridSlot selectedSlot, IGridSlot targetSlot)
-        {
-            GridItem selectedItem = selectedSlot.Item;
-            GridItem targetItem = targetSlot.Item;
-
-            selectedSlot.SetItem(targetItem);
-            targetSlot.SetItem(selectedItem);
-        }
-
-       
     }
 }
