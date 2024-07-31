@@ -30,7 +30,7 @@ namespace Match3.Matchs
             HashSet<MatchSequence> matchSequences = GetMatchSequences(matchedDataAllSlots, gridPosition, board);
             if (matchSequences.Count > 0)
             {
-                MatchData matchData = new MatchData(matchSequences, board[gridPosition].ItemId);
+                MatchData matchData = new MatchData(matchSequences);
 
 
                 if (IsSharedMatchData(matchData, matchedDataAllSlots.MatchDataList,
@@ -42,7 +42,7 @@ namespace Match3.Matchs
 
                         matchSequences.UnionWith(sharedMatchData.MatchedSequences);
 
-                        matchData.SetMatchDatas(matchSequences, board[gridPosition].ItemId);
+                        matchData.SetMatchDatas(matchSequences);
                     }
                 }
 

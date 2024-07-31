@@ -19,7 +19,7 @@ namespace Match3.Input
             SubcribeEvents();
         }
 
-        public void SubcribeEvents()
+        private void SubcribeEvents()
         {
             EventManager<Vector2>.Subscribe(BoardEvents.OnPointerDown, OnPointerDown);
             EventManager<Vector2>.Subscribe(BoardEvents.OnPointerUp, OnPointerUp);
@@ -33,7 +33,7 @@ namespace Match3.Input
             EventManager<Vector2>.Unsubscribe(BoardEvents.OnPointerDrag, OnPointerDrag);
         }
 
-        public void OnPointerDown(Vector2 pointerWorldPos)
+        private void OnPointerDown(Vector2 pointerWorldPos)
         {
             if (!_match3Game.IsSwapAllowed)
             {
@@ -49,7 +49,7 @@ namespace Match3.Input
         }
 
 
-        public void OnPointerDrag(Vector2 pointerWorldPos)
+        private void OnPointerDrag(Vector2 pointerWorldPos)
         {
             if (!_isDragMode)
                 return;
@@ -68,13 +68,11 @@ namespace Match3.Input
             _isDragMode = false;
 
             SwapAsync((_selectedGridPosition, targetGridPosition));
-            EventManager<(GridPosition, GridPosition)>.Execute(BoardEvents.OnSwapDetected, (_selectedGridPosition, targetGridPosition));
         }
 
 
-        public void OnPointerUp(Vector2 pointerWorldPos)
+        private void OnPointerUp(Vector2 pointerWorldPos)
         {
-            
             _isDragMode = false;
             if (!_match3Game.IsSwapAllowed)
             {

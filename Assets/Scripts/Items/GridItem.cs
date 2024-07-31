@@ -18,13 +18,7 @@ namespace Match3.Items
 
         public bool IsMatchable => ColorType != ColorType.None;
 
-        public bool IsExploded { get; private set; } = false;
-
-        public abstract int DefaultScore { get; }
-
         public IGridSlot ItemSlot { get; private set; }
-
-        public int CurrentScore { get; private set; }
 
         public IGridSlot DestinationSlot { get; private set; }
 
@@ -34,12 +28,9 @@ namespace Match3.Items
 
         private ItemGenerator _generator;
 
-        public virtual void Initialize()
-        {
-            SetScore(DefaultScore);
-        }
+        public virtual void Initialize() {}
 
-        public void SetScale(float scale)
+        private void SetScale(float scale)
         {
             transform.SetScale(scale);
         }
@@ -52,11 +43,6 @@ namespace Match3.Items
         public void SetGenerator(ItemGenerator generator)
         {
             _generator = generator;
-        }
-
-        public void SetScore(int score)
-        {
-            CurrentScore = score;
         }
 
         public void SetState(ItemState state)
@@ -74,8 +60,6 @@ namespace Match3.Items
         {
             SetScale(1);
             ItemState = ItemState.Rest;
-            SetExploded(false);
-            SetScore(DefaultScore);
             SetItemStateDelay(0);
         }
 
@@ -94,11 +78,6 @@ namespace Match3.Items
             DestinationSlot = destinationSlot;
         }
 
-        public virtual void Explode()
-        {
-            SetExploded(true);
-        }
-
         /// <summary>
         ///   <para>shouldPlayExplosion: explosion particle oynasin mi</para>
         ///   <para>isSpecialKill: 4lu tas mi 8li tas mi</para>
@@ -107,13 +86,8 @@ namespace Match3.Items
         {
             this.Hide();
         }
-
-        public void SetExploded(bool value)
-        {
-            IsExploded = value;
-        }
-
-        public void SetItemStateDelay(int value)
+        
+        private void SetItemStateDelay(int value)
         {
             ItemStateDelay = value;
         }

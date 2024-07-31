@@ -4,7 +4,6 @@ using Match3.Enums;
 using Match3.Items;
 using Match3.Matchs;
 using Match3.Jobs;
-
 using UnityEngine;
 using Match3.Strategy;
 
@@ -41,13 +40,13 @@ namespace Match3.Game
             EventManager.Unsubscribe(BoardEvents.OnBeforeJobsStart, DisableSwap);
         }
 
-
         public async void SwapItemsAsync(GridPosition selectedPosition, GridPosition targetPosition)
         {
             IGridSlot selectedSlot = _board[selectedPosition];
             IGridSlot targetSlot = _board[targetPosition];
             await DoNormalSwap(selectedSlot, targetSlot);
         }
+        
         private async UniTask DoNormalSwap(IGridSlot selectedSlot, IGridSlot targetSlot)
         {
             await SwapItemsAnimation(selectedSlot, targetSlot);
@@ -78,8 +77,7 @@ namespace Match3.Game
             EnableSwap();
         }
 
-        
-        public void CheckAutoMatch()
+        private void CheckAutoMatch()
         {
             EventManager.Execute(BoardEvents.OnSequenceDataCalculated);
 
@@ -99,7 +97,6 @@ namespace Match3.Game
             return boardMatchData.MatchExists;
         }   
      
-        
         private UniTask SwapItemsAnimation(IGridSlot selectedSlot, IGridSlot targetSlot)
         {
             return _itemSwapper.SwapItems(selectedSlot, targetSlot, this);
@@ -118,7 +115,7 @@ namespace Match3.Game
 
         #region Swap
 
-        public void EnableSwap()
+        private void EnableSwap()
         {
             _isSwapAllowed = true;
         }

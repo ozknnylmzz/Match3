@@ -17,8 +17,6 @@ namespace Match3.Boards
 
         public bool IsFound { get; }
 
-        public bool IsItemDroppedTo { get; }
-
         public GridPosition GridPosition { get; }
 
         public Vector3 WorldPosition { get; }

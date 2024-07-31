@@ -7,10 +7,8 @@ namespace Match3.Jobs
 {
     public class JobsExecutor : IDisposable
     {
-
         private static List<Job> _jobs;
-
-        public static Dictionary<int, List<ItemsFallJob>> _fallJobPairs;
+        private static Dictionary<int, List<ItemsFallJob>> _fallJobPairs;
 
         public JobsExecutor()
         {

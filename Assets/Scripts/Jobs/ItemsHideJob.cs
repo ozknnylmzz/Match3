@@ -28,7 +28,6 @@ namespace Match3
 
             foreach (GridItem item in _items)
             {
-                item.SetExploded(true);
 
                 _ = sequence.Join(item.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), ScaleDuration)
                             .SetEase(Ease.InOutSine));

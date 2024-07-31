@@ -17,12 +17,8 @@ namespace Match3.Boards
 
         public bool IsPositionInBounds(GridPosition gridPosition);
 
-        public bool IsPositionOnBoard(GridPosition gridPosition);
-
         public bool IsPositionOnItem(GridPosition gridPosition);
 
-        public GridPosition WorldToGridPosition(Vector3 pointerWorldPos);
-        
         public Vector3 GridToWorldPosition(GridPosition gridPosition);
     } 
 }

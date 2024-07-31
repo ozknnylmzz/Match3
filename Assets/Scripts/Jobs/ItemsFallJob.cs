@@ -3,6 +3,7 @@ using DG.Tweening;
 using Match3.Enums;
 using Match3.Items;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Match3.Jobs
@@ -24,6 +25,7 @@ namespace Match3.Jobs
 
         public override async UniTask ExecuteAsync()
         {
+            Debug.Log("_hideItemsOnColumn"+_hideItemsOnColumn.Count());
             await UniTask.WhenAll(_hideItemsOnColumn.Select(item => UniTask.WaitUntil(() => item.ItemState == ItemState.Hide )));
 
             Sequence sequence = DOTween.Sequence();

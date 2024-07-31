@@ -549,10 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f37da69aa79924d885c5c8982434ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rowCount: 8
-  _columnCount: 8
-  _cellSpacing: 0.1
-  _grid: {fileID: 4460114610614211921, guid: a7701bd1a7c20e342af1c8fb1990d8dd, type: 3}
+  _boardConfigData: {fileID: 11400000, guid: 44d1c25be990e4480b5bf2a3aca37609, type: 2}
 --- !u!1 &1365560416
 GameObject:
   m_ObjectHideFlags: 0

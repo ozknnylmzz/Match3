@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75cd0325d649aa949922e22eb962edc3, type: 3}
-  m_Name: Items Data
+  m_Script: {fileID: 11500000, guid: 7f6b532514fae40faa58230820fc9bda, type: 3}
+  m_Name: Board Config Data
   m_EditorClassIdentifier: 
-  ItemDatas:
-  - ItemPrefab: {fileID: 3539795744576250017, guid: 3b3f8b187cda01440aa9fc5b3e10c483, type: 3}
-    ConfigureData: {fileID: 11400000, guid: 894a27053dffc42fa8ccbf789c9f2749, type: 2}
+  RowCount: 7
+  ColumnCount: 7
+  CellSpacing: 0.1
+  Grid: {fileID: 4460114610614211921, guid: a7701bd1a7c20e342af1c8fb1990d8dd, type: 3}

@@ -13,7 +13,6 @@ namespace Match3
 
         public static IEnumerable<IGridSlot> ExecuteSelectionRequests(IBoard board, IEnumerable<IGridSlot> unselectableSlots)
         {
-            
             if (_selectorItems.Count == 0)
             {
                 return Enumerable.Empty<IGridSlot>();
@@ -34,7 +33,7 @@ namespace Match3
             return _selectedSlots;
         }
 
-        public static void RemoveSelectedSlots(IEnumerable<IGridSlot> slots)
+        private static void RemoveSelectedSlots(IEnumerable<IGridSlot> slots)
         {
             _selectableSlots.ExceptWith(slots);
             _selectedSlots.UnionWith(slots);

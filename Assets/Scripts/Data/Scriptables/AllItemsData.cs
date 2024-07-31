@@ -9,7 +9,7 @@ namespace Match3.Data
     public class AllItemsData : ScriptableObject
     {
         public ItemData[] ItemDatas;
-
+    
         public ItemData GetItemDataOfType(ItemType itemType)
         {
             foreach (ItemData itemData in ItemDatas)
@@ -19,13 +19,13 @@ namespace Match3.Data
                     return itemData;
                 }
             }
-
+    
             Debug.LogError("Could not find given Item type. Check scriptable object!");
-
+    
             return null;
         }
     }
-
+    
     [Serializable]
     public class ItemData
     {

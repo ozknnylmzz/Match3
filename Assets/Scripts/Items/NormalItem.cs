@@ -1,15 +1,14 @@
+using Match3.Data;
 using Match3.Enums;
-using Match3.Items;
 using UnityEngine;
 
-namespace Match3.Data
+namespace Match3.Items
 {
     public class NormalItem : SpriteItem
     {
-        [SerializeField] private ColoredGlowItemConfigureData _configureData;
+        [SerializeField] private ColoredItemConfigureData _configureData;
 
         public override ItemType ItemType => ItemType.BoardItem;
-        public override int DefaultScore => 0;
 
         public override void ConfigureItem(int configureType)
         {
@@ -17,23 +16,12 @@ namespace Match3.Data
             SetContentData(_configureData.ColoredItemDatas[configureType]);
         }
 
-        public override void ResetItem()
-        {
-            base.ResetItem();
-        }
-
-        public override void Explode()
-        {
-            base.Explode();
-            Kill();
-        }
-
         public override void Kill(bool shouldPlayExplosion = true, bool isSpecialKill = true)
         {
             base.Kill();
         }
 
-        private void SetContentData(ColoredGlowItemData itemContentData)
+        private void SetContentData(ColoredItemData itemContentData)
         {
             SetColorType(itemContentData.colorType);
             SetSprite(itemContentData.Sprite);

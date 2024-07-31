@@ -130,4 +130,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 2603548532691158358}
-  _configureData: {fileID: 11400000, guid: 2e0f03df4dae6024589eaf70b7e9bcd5, type: 2}
+  _configureData: {fileID: 11400000, guid: 894a27053dffc42fa8ccbf789c9f2749, type: 2}

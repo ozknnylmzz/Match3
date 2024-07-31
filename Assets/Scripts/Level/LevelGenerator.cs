@@ -29,7 +29,7 @@ namespace Match3.Level
             _itemGenerator.SetConfigureTypes(possibleConfigureTypes);
         }
 
-        public List<ItemConfigureData> FillBoardWithItems()
+        public void FillBoardWithItems()
         {
             for (int i = 0; i < _board.RowCount; i++)
             {
@@ -43,20 +43,6 @@ namespace Match3.Level
                     SetItemWithoutMatch(_board, gridSlot);
                 }
             }
-
-            return GetBoardData();
-        }
-
-        private List<ItemConfigureData> GetBoardData()
-        {
-            List<ItemConfigureData> initialBoardData = new();
-
-            foreach (IGridSlot slot in _board)
-            {
-                initialBoardData.Add(new ItemConfigureData(slot.Item.ItemType, slot.Item.ConfigureType));
-            }
-
-            return initialBoardData;
         }
 
         public void GenerateItemsPool(ItemType itemType)
@@ -65,7 +51,7 @@ namespace Match3.Level
             _itemGenerator.GeneratePool(itemData.ItemPrefab, itemData.ConfigureData.ItemPoolSize);
         }
 
-        private GridItem SetItemWithoutMatch(IBoard board, IGridSlot slot)
+        private void SetItemWithoutMatch(IBoard board, IGridSlot slot)
         {
             while (true)
             {
@@ -75,7 +61,7 @@ namespace Match3.Level
 
                 BoardMatchData boardMatchData = _matchDataProvider.GetMatchData(board, slot.GridPosition);
 
-                if (!boardMatchData.MatchExists) return item;
+                if (!boardMatchData.MatchExists) return ;
 
                 item.Hide();
 

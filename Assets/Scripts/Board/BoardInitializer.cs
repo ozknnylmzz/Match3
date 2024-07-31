@@ -12,13 +12,10 @@ namespace Match3.Boards
     public class BoardInitializer : MonoBehaviour
     {
         [SerializeField] private Board _board;
-
         [SerializeField] private LevelGenerator _levelGenerator;
         [SerializeField] private ItemGenerator _itemGenerator; 
-
         [SerializeField] private Match3Game _match3Game;
         [SerializeField] private BoardInputController _inputController;
-
 
         private LevelLoader _levelLoader;
         private StrategyConfig _strategyConfig;
@@ -29,7 +26,6 @@ namespace Match3.Boards
             ConstructObjects();
             InitializeGame();
         }
-
 
         private void InitializeGame()
         {
@@ -42,12 +38,10 @@ namespace Match3.Boards
             _levelLoader.Initialize(_levelGenerator);
             _inputController.Initialize(_match3Game);
 
-
             EventManager.Execute(BoardEvents.OnBoardInitialized);
 
             ItemSelectionManager.Reset(_board);
         }
-
 
         private void ConstructObjects()
         {
@@ -55,8 +49,7 @@ namespace Match3.Boards
             _gameConfig = new GameConfig();
             _levelLoader = new LevelLoader();
         }
-
-
+        
         private void OnDisable()
         {
             _inputController.UnsubcribeEvents();

@@ -4,6 +4,7 @@ using Match3.Boards;
 using Match3.Enums;
 using Match3.Items;
 using Match3.Jobs;
+using UnityEngine;
 
 namespace Match3.Strategy
 {
@@ -13,11 +14,12 @@ namespace Match3.Strategy
         private int extraRowIndex;
 
         public FallDownFillStrategy(IBoard board, ItemGenerator itemGenerator) : base(board, itemGenerator)
-        { }
+        {
+        }
 
         public override void AddFillJobs(IEnumerable<IGridSlot> allSlots, IEnumerable<GridItem> allItems)
         {
-             IEnumerable<int> fallSlotsColumnIndexes = allSlots.Select(slot => slot.GridPosition.ColumnIndex);
+            IEnumerable<int> fallSlotsColumnIndexes = allSlots.Select(slot => slot.GridPosition.ColumnIndex);
             List<ItemFallData> allItemsFallData = new();
             ResetDropSlots();
 
@@ -33,7 +35,6 @@ namespace Match3.Strategy
                     JobsExecutor.AddFallJob(new ItemsFallJob(itemsFallData, itemsToHideOnColumn), columnIndex);
                 }
             }
-
         }
 
         private List<ItemFallData> GetItemsFallDataPerColumn(int columnIndex)

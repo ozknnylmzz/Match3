@@ -25,7 +25,6 @@ namespace Match3.Items
         {
             GridItem item = _itemPools[itemType].GetFromPool();
 
-        
             ConfigureItem(item, configureType);
             return item;
         }

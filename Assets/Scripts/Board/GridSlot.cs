@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Match3.Boards
 {
-  
     public class GridSlot : MonoBehaviour, IGridSlot
     {
         public bool CanSetItem => !HasItem;
@@ -25,8 +24,6 @@ namespace Match3.Boards
         public GridPosition GridPosition { get; private set; }
 
         public Vector3 WorldPosition { get; private set; }
-
-
 
         public void SetPosition(GridPosition gridPosition, Vector3 worldPosition)
         {

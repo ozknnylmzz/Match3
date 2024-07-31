@@ -6,7 +6,6 @@ namespace Match3.Matchs
     public class MatchData
     {
         public HashSet<MatchSequence> MatchedSequences;
-        public int MatchItemId;
         public HashSet<IGridSlot> MatchedGridSlots;
 
         #region Variables
@@ -21,22 +20,16 @@ namespace Match3.Matchs
             set => MatchedGridSlots = value;
         }
 
-        private int _matchItemId
-        {
-            set => MatchItemId = value;
-        }
-
         #endregion
 
-        public MatchData(HashSet<MatchSequence> matchedSequences, int matchItemId)
+        public MatchData(HashSet<MatchSequence> matchedSequences)
         {
-            SetMatchDatas(matchedSequences, matchItemId);
+            SetMatchDatas(matchedSequences);
         }
 
-        public void SetMatchDatas(HashSet<MatchSequence> matchedSequences, int matchItemId)
+        public void SetMatchDatas(HashSet<MatchSequence> matchedSequences)
         {
             _matchedSequences = matchedSequences;
-            _matchItemId = matchItemId;
             _matchedGridSlots = GetMatchedGridSlots();
         }
 

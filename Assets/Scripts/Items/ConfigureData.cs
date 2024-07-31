@@ -12,9 +12,4 @@ namespace Match3.Data
     public abstract class ContentData
     {}
 
-
-    //public abstract class ConfigureContentData
-    //{
-    //    public ItemConfigureData ItemConfigureData;
-    //}
 }

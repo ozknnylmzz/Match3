@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using match3.data;
 using UnityEngine;
 
 namespace Match3.Boards
 {
     public class Board : MonoBehaviour, IBoard
     {
+        [SerializeField] private BoardConfigData _boardConfigData;
+        
         private const float _cellSize = 1f;
-
-        [SerializeField] private int _rowCount;
-        [SerializeField] private int _columnCount;
-        [SerializeField] private float _cellSpacing = 0.05f;
-        [SerializeField] private GridSlot _grid;
-
         private Vector3 _originPos;
 
         private IGridSlot[,] _gridSlots;
@@ -23,8 +20,8 @@ namespace Match3.Boards
 
         public GridPosition[] AllGridPositions => _allGridPositions;
 
-        public int RowCount => _rowCount;
-        public int ColumnCount => _columnCount;
+        public int RowCount => _boardConfigData.RowCount;
+        public int ColumnCount => _boardConfigData.ColumnCount;
 
         public void Initialize()
         {
@@ -33,19 +30,19 @@ namespace Match3.Boards
 
         private void GenerateGrid()
         {
-            _gridSlots = new IGridSlot[_rowCount, _columnCount];
-            _allGridPositions = new GridPosition[_rowCount * _columnCount];
+            _gridSlots = new IGridSlot[RowCount, ColumnCount];
+            _allGridPositions = new GridPosition[RowCount * ColumnCount];
 
-            _originPos = GetOriginPosition(_rowCount, _columnCount);
+            _originPos = GetOriginPosition(RowCount, ColumnCount);
 
-            for (int i = 0; i < _rowCount; i++)
+            for (int i = 0; i < RowCount; i++)
             {
-                for (int j = 0; j < _columnCount; j++)
+                for (int j = 0; j < ColumnCount; j++)
                 {
-                    int iteration = i * _columnCount + j;
+                    int iteration = i * ColumnCount + j;
                     Vector3 slotPosition = GridToWorldPosition(i, j);
 
-                    GridSlot gridSlot = Instantiate(_grid, slotPosition, Quaternion.identity, transform);
+                    GridSlot gridSlot = Instantiate(_boardConfigData.Grid, slotPosition, Quaternion.identity, transform);
                     gridSlot.name = "(" + i + " , " + j + ")";
 
                     GridPosition gridPosition = new GridPosition(i, j);
@@ -57,8 +54,6 @@ namespace Match3.Boards
             }
         }
 
-       
-
         public bool IsPointerOnBoard(Vector3 pointerWorldPos, out GridPosition gridPosition)
         {
             gridPosition = WorldToGridPosition(pointerWorldPos);
@@ -67,7 +62,7 @@ namespace Match3.Boards
 
         public bool IsPositionInBounds(GridPosition gridPosition)
         {
-            return gridPosition.IsPositionInBounds(_rowCount, _columnCount);
+            return gridPosition.IsPositionInBounds(RowCount, ColumnCount);
         }
 
         public bool IsPositionOnBoard(GridPosition gridPosition)
@@ -82,7 +77,7 @@ namespace Match3.Boards
 
         public GridPosition WorldToGridPosition(Vector3 pointerWorldPos)
         {
-            Vector2 gridPos = (pointerWorldPos - _originPos) / (_cellSize + _cellSpacing);
+            Vector2 gridPos = (pointerWorldPos - _originPos) / (_cellSize + _boardConfigData.CellSpacing);
 
             int rowIndex = Mathf.FloorToInt(gridPos.y + _cellSize / 2);
             int columnIndex = Mathf.FloorToInt(gridPos.x + _cellSize / 2);
@@ -97,13 +92,13 @@ namespace Match3.Boards
 
         private Vector3 GridToWorldPosition(int rowIndex, int columnIndex)
         {
-            return new Vector3(columnIndex, rowIndex) * (_cellSize + _cellSpacing) + _originPos;
+            return new Vector3(columnIndex, rowIndex) * (_cellSize + _boardConfigData.CellSpacing) + _originPos;
         }
 
         private Vector3 GetOriginPosition(int rowCount, int columnCount)
         {
-            float gridWidth = columnCount * _cellSize + (columnCount - 1) * _cellSpacing;
-            float gridHeight = rowCount * _cellSize + (rowCount - 1) * _cellSpacing;
+            float gridWidth = columnCount * _cellSize + (columnCount - 1) * _boardConfigData.CellSpacing;
+            float gridHeight = rowCount * _cellSize + (rowCount - 1) * _boardConfigData.CellSpacing;
 
             float originX = -gridWidth / 2.0f + _cellSize / 2;
             float originY = -gridHeight / 2.0f + _cellSize / 2;

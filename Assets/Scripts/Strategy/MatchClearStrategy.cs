@@ -56,12 +56,10 @@ namespace Match3.Strategy
             JobsExecutor.AddJob(new ItemsHideJob(itemsToHide));
         }
 
-
         private void SaveAllItems()
         {
             _allItems = BoardHelper.GetItemsOfSlots(_allSlots);
         }
-
 
         private void InitializeAllCollections()
         {
