@@ -15,7 +15,6 @@ namespace Match3.Level
             int[] configureTypes = Constants.CONFIGURETYPES_PIECE_VALUE_4;
 
             levelGenerator.SetConfigureTypes(configureTypes);
-
             levelGenerator.GenerateItemsPool(ItemType.BoardItem);
             levelGenerator.FillBoardWithItems();
         }

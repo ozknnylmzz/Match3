@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace Match3.Boards
 {
@@ -87,8 +86,6 @@ namespace Match3.Boards
             return RowIndex == other.RowIndex && ColumnIndex == other.ColumnIndex;
         }
 
-     
-
         public override bool Equals(object obj)
         {
             return obj is GridPosition other && Equals(other);
@@ -114,20 +111,6 @@ namespace Match3.Boards
                    RowIndex < rowCount &&
                    ColumnIndex >= 0 &&
                    ColumnIndex < columnCount;
-        }
-
-        public int GetColumnDistanceTo(GridPosition other)
-        {
-            GridPosition distance = this - other;
-
-            return Mathf.Abs(distance.ColumnIndex);
-        }
-
-        public float GetRadialDistanceTo(GridPosition other)
-        {
-            GridPosition distance = this - other;
-
-            return Mathf.Sqrt(Mathf.Pow(distance.ColumnIndex, 2) + Mathf.Pow(distance.RowIndex, 2));
         }
 
         #endregion

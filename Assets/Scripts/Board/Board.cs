@@ -65,7 +65,7 @@ namespace Match3.Boards
             return gridPosition.IsPositionInBounds(RowCount, ColumnCount);
         }
 
-        public bool IsPositionOnBoard(GridPosition gridPosition)
+        private bool IsPositionOnBoard(GridPosition gridPosition)
         {
             return IsPositionInBounds(gridPosition);
         }
@@ -75,7 +75,7 @@ namespace Match3.Boards
             return IsPositionInBounds(gridPosition) && this[gridPosition].CanContainItem;
         }
 
-        public GridPosition WorldToGridPosition(Vector3 pointerWorldPos)
+        private GridPosition WorldToGridPosition(Vector3 pointerWorldPos)
         {
             Vector2 gridPos = (pointerWorldPos - _originPos) / (_cellSize + _boardConfigData.CellSpacing);
 

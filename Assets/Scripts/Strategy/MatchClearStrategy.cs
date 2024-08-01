@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Match3.Boards;
 using Match3.Items;
 using Match3.Jobs;
-using Match3.Matchs;
 
 namespace Match3.Strategy
 {
@@ -32,18 +31,10 @@ namespace Match3.Strategy
         private void CalculateJobDatas(BoardMatchData boardMatchData)
         {
             InitializeAllCollections();
-            
+
             _allSlots.UnionWith(boardMatchData.AllMatchedGridSlots);
 
-            foreach (MatchData matchData in boardMatchData.MatchedDataList)
-            {
-                CalculateHideJobs(matchData);
-            }
-        }
-
-        private void CalculateHideJobs(MatchData matchData)
-        {
-            HashSet<GridItem> itemsToHide = BoardHelper.GetItemsOfSlots(matchData.MatchedGridSlots);
+            HashSet<GridItem> itemsToHide = BoardHelper.GetItemsOfSlots(_allSlots);
 
             JobsExecutor.AddJob(new ItemsHideJob(itemsToHide));
         }
