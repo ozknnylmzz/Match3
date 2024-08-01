@@ -33,6 +33,11 @@ namespace Match3.Items
         {
             return GetItemWithId(ItemType.BoardItem, _possibleConfigureTypes.ChooseRandom());
         }
+        
+        public GridItem GetRedNormalItem()
+        {
+            return GetItemWithId(ItemType.BoardItem, 1);
+        }
 
         public void ReturnItemToPool(GridItem item)
         {

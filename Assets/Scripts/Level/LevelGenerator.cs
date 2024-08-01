@@ -39,7 +39,7 @@ namespace Match3.Level
                     if (!gridSlot.CanSetItem)
                         continue;
 
-                    SetItemWithoutMatch(_board, gridSlot);
+                    SetItemWithoutMatch(gridSlot, i);
                 }
             }
         }
@@ -50,21 +50,11 @@ namespace Match3.Level
             _itemGenerator.GeneratePool(itemData.ItemPrefab, itemData.ConfigureData.ItemPoolSize);
         }
 
-        private void SetItemWithoutMatch(IBoard board, IGridSlot slot)
+        private void SetItemWithoutMatch(IGridSlot slot, int colorType)
         {
-            while (true)
-            {
-                GridItem item = _itemGenerator.GetRandomNormalItem();
+            GridItem item = colorType == 4 ? _itemGenerator.GetRedNormalItem() : _itemGenerator.GetRandomNormalItem();
 
-                _itemGenerator.SetItemOnSlot(item, slot);
-
-                BoardMatchData boardMatchData = _matchDataProvider.GetMatchData(board, slot.GridPosition);
-
-                if (!boardMatchData.MatchExists) return ;
-
-                item.Hide();
-
-            }
+            _itemGenerator.SetItemOnSlot(item, slot);
         }
     }
 }
