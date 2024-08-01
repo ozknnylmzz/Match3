@@ -50,7 +50,7 @@ namespace Match3.Boards
         
         private void OnDisable()
         {
-            _inputController.UnsubcribeEvents();
+            _inputController.UnsubscribeEvents();
         }
 
         private void OnDestroy()

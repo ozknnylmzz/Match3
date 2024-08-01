@@ -16,17 +16,17 @@ namespace Match3.Input
         public void Initialize(Match3Game match3Game)
         {
             _match3Game = match3Game;
-            SubcribeEvents();
+            SubscribeEvents();
         }
 
-        private void SubcribeEvents()
+        private void SubscribeEvents()
         {
             EventManager<Vector2>.Subscribe(BoardEvents.OnPointerDown, OnPointerDown);
             EventManager<Vector2>.Subscribe(BoardEvents.OnPointerUp, OnPointerUp);
             EventManager<Vector2>.Subscribe(BoardEvents.OnPointerDrag, OnPointerDrag);
         }
 
-        public void UnsubcribeEvents()
+        public void UnsubscribeEvents()
         {
             EventManager<Vector2>.Unsubscribe(BoardEvents.OnPointerDown, OnPointerDown);
             EventManager<Vector2>.Unsubscribe(BoardEvents.OnPointerUp, OnPointerUp);
@@ -47,7 +47,6 @@ namespace Match3.Input
                 _isDragMode = true;
             }
         }
-
 
         private void OnPointerDrag(Vector2 pointerWorldPos)
         {
@@ -70,7 +69,6 @@ namespace Match3.Input
             SwapAsync((_selectedGridPosition, targetGridPosition));
         }
 
-
         private void OnPointerUp(Vector2 pointerWorldPos)
         {
             _isDragMode = false;
@@ -85,7 +83,6 @@ namespace Match3.Input
             }
 
             _isDragMode = false;
-
         }
 
         private bool IsSideGrid(GridPosition gridPosition)

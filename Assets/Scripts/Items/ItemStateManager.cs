@@ -16,7 +16,7 @@ namespace Match3.Items
             }
         }
 
-        public static void AddJobToItems(GridItem item, Job job)
+        private static void AddJobToItems(GridItem item, Job job)
         {
             if (_itemJobPairs.ContainsKey(item))
             {
@@ -34,7 +34,7 @@ namespace Match3.Items
             {
                 SetItemState(itemJobPair);
             }
-
+            
             _itemJobPairs.Clear();
         }
 

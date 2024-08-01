@@ -67,7 +67,4 @@ public class ObjectPool<T> where T: Component
         _restingObjects.Enqueue(obj);
     }
 
-    public int ActiveCount => _poolSize - _restingObjects.Count;
-
-   
 }

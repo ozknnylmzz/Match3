@@ -7,7 +7,6 @@ namespace Match3.Items
     public static class DisposeManager
     {
         private static readonly List<IDisposable> _disposables;
-
         static DisposeManager()
         {
             _disposables = new();
