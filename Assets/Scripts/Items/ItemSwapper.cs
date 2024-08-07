@@ -25,7 +25,7 @@ namespace Match3.Items
 
             if (match3Game.IsMatchDetected(out BoardMatchData boardMatchData, selectedSlot.GridPosition, targetSlot.GridPosition) )
             {
-                EventManager.Execute(BoardEvents.OnBeforeJobsStart);
+                EventBus.Instance.Publish(BoardEvents.OnBeforeJobsStart);
             }
 
             await  DOTween.Sequence()

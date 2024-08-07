@@ -31,12 +31,12 @@ namespace Match3.Game
 
         private void OnEnable()
         {
-            EventManager.Subscribe(BoardEvents.OnBeforeJobsStart, DisableSwap);
+            EventBus.Instance.Subscribe(BoardEvents.OnBeforeJobsStart, DisableSwap);
         }
 
         private void OnDisable()
         {
-            EventManager.Unsubscribe(BoardEvents.OnBeforeJobsStart, DisableSwap);
+            EventBus.Instance.Unsubscribe(BoardEvents.OnBeforeJobsStart, DisableSwap);
         }
 
         public async void SwapItemsAsync(GridPosition selectedPosition, GridPosition targetPosition)
@@ -65,10 +65,10 @@ namespace Match3.Game
 
         private async void StartJobs()
         {
-            EventManager.Execute(BoardEvents.OnBeforeJobsStart);
+            EventBus.Instance.Publish(BoardEvents.OnBeforeJobsStart);
             await _jobsExecutor.ExecuteJobsAsync();
 
-            EventManager.Execute(BoardEvents.OnAfterJobsCompleted);
+            EventBus.Instance.Publish(BoardEvents.OnAfterJobsCompleted);
             EnableSwap();
         }
 

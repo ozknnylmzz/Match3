@@ -21,16 +21,16 @@ namespace Match3.Input
 
         private void SubscribeEvents()
         {
-            EventManager<Vector2>.Subscribe(BoardEvents.OnPointerDown, OnPointerDown);
-            EventManager<Vector2>.Subscribe(BoardEvents.OnPointerUp, OnPointerUp);
-            EventManager<Vector2>.Subscribe(BoardEvents.OnPointerDrag, OnPointerDrag);
+            EventBus.Instance.Subscribe<Vector2>(BoardEvents.OnPointerDown, OnPointerDown);
+            EventBus.Instance.Subscribe<Vector2>(BoardEvents.OnPointerUp, OnPointerUp);
+            EventBus.Instance.Subscribe<Vector2>(BoardEvents.OnPointerDrag, OnPointerDrag);
         }
 
         public void UnsubscribeEvents()
         {
-            EventManager<Vector2>.Unsubscribe(BoardEvents.OnPointerDown, OnPointerDown);
-            EventManager<Vector2>.Unsubscribe(BoardEvents.OnPointerUp, OnPointerUp);
-            EventManager<Vector2>.Unsubscribe(BoardEvents.OnPointerDrag, OnPointerDrag);
+            EventBus.Instance.Unsubscribe<Vector2>(BoardEvents.OnPointerDown, OnPointerDown);
+            EventBus.Instance.Unsubscribe<Vector2>(BoardEvents.OnPointerUp, OnPointerUp);
+            EventBus.Instance.Unsubscribe<Vector2>(BoardEvents.OnPointerDrag, OnPointerDrag);
         }
 
         private void OnPointerDown(Vector2 pointerWorldPos)

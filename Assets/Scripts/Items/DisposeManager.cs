@@ -11,7 +11,7 @@ namespace Match3.Items
         {
             _disposables = new();
 
-            EventManager.Subscribe(BoardEvents.OnBoardDestroyed, DisposeAll);
+            EventBus.Instance.Subscribe(BoardEvents.OnBoardDestroyed, DisposeAll);
         }
 
         public static void Add(IDisposable disposable)

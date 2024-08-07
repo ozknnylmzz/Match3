@@ -10,7 +10,7 @@ namespace Match3.Input
         {
             Vector2 worldPos = GetWorldPosition(eventData.position);
 
-            EventManager<Vector2>.Execute(BoardEvents.OnPointerDown, worldPos);
+            EventBus.Instance.Publish<Vector2>(BoardEvents.OnPointerDown, worldPos);
         }
 
         public void OnPointerUp(PointerEventData eventData)
@@ -20,7 +20,7 @@ namespace Match3.Input
 
             Vector2 worldPos = GetWorldPosition(eventData.position);
 
-            EventManager<Vector2>.Execute(BoardEvents.OnPointerUp, worldPos);
+            EventBus.Instance.Publish<Vector2>(BoardEvents.OnPointerUp, worldPos);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -30,7 +30,7 @@ namespace Match3.Input
 
             Vector2 worldPos = GetWorldPosition(eventData.position);
 
-            EventManager<Vector2>.Execute(BoardEvents.OnPointerDrag, worldPos);
+            EventBus.Instance.Publish<Vector2>(BoardEvents.OnPointerDrag, worldPos);
         }
 
         private Vector2 GetWorldPosition(Vector2 screenPosition)

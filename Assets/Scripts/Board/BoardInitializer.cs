@@ -38,7 +38,7 @@ namespace Match3.Boards
             _levelLoader.Initialize(_levelGenerator);
             _inputController.Initialize(_match3Game);
 
-            EventManager.Execute(BoardEvents.OnBoardInitialized);
+            EventBus.Instance.Publish(BoardEvents.OnBoardInitialized);
         }
 
         private void ConstructObjects()
@@ -55,7 +55,7 @@ namespace Match3.Boards
 
         private void OnDestroy()
         {
-            EventManager.Execute(BoardEvents.OnBoardDestroyed);
+            EventBus.Instance.Publish(BoardEvents.OnBoardDestroyed);
         }
     }
 }
